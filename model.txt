@@ -1,0 +1,126 @@
+// // Use DBML to define your database structure
+// // Docs: https://dbml.dbdiagram.io/docs
+
+Table users {
+  user_id serial [primary key]
+  email varchar [unique, not null]
+  password_hash varchar [not null]
+  refresh_token text
+  created_at timestamp 
+  updated_at timestamp
+}
+
+Table profiles {
+  profile_id serial [primary key]
+  user_id integer 
+  avatar
+  first_name varchar
+  last_name varchar
+  bio text
+  interests text
+  profile_image varchar
+  created_at timestamp 
+  updated_at timestamp 
+}
+Ref: profiles.user_id > users.user_id
+
+Table initiatives {
+  initiative_id serial [primary key]
+  creator_id integer
+  title varchar [not null]
+  description text
+  category varchar
+  location varchar
+  start_date date
+  end_date date
+  created_at timestamp 
+  updated_at timestamp
+}
+Ref: initiatives.creator_id > users.user_id
+
+Table participation {
+  participation_id serial [primary key]
+  user_id integer
+  initiative_id integer 
+  joined_at timestamp
+}
+Ref: participation.initiative_id > initiatives.initiative_id
+Ref: participation.user_id > users.user_id
+
+Table ecofriendly_actions {
+  action_id serial [primary key]
+  user_id integer
+  action_type varchar
+  description text
+  impact_metric float
+  logged_at timestamp
+}
+Ref: ecofriendly_actions.user_id >  users.user_id
+
+Table posts {
+  post_id serial [primary key]
+  user_id integer 
+  content text
+  image varchar
+  created_at timestamp 
+  updated_at timestamp
+}
+Ref: posts.user_id > users.user_id
+
+Table comments {
+  comment_id serial [primary key]
+  post_id integer
+  user_id integer 
+  content text
+  created_at timestamp
+}
+Ref: comments.post_id > posts.post_id
+Ref: comments.user_id > users.user_id
+
+
+Table likes {
+  like_id serial [primary key]
+  post_id integer 
+  user_id integer 
+  created_at timestamp
+}
+Ref: likes.post_id > posts.post_id
+Ref: likes.user_id > users.user_id
+
+Table follows {
+  follow_id serial [primary key]
+  follower_id integer 
+  following_id integer 
+  created_at timestamp
+}
+
+Ref: follows.follower_id > users.user_id
+Ref: follows.following_id > users.user_id
+
+Table challenges {
+  challenge_id serial [primary key]
+  title varchar [not null]
+  description text
+  reward varchar
+  created_at timestamp 
+  updated_at timestamp 
+}
+
+Table user_challenges {
+  user_challenge_id serial [primary key]
+  user_id integer 
+  challenge_id integer
+  completed_at timestamp
+}
+Ref: user_challenges.user_id > users.user_id
+Ref: user_challenges.challenge_id > challenges.challenge_id
+
+Table map_markers {
+  marker_id serial [primary key]
+  initiative_id integer
+  latitude decimal(9,6)
+  longitude decimal(9,6)
+  created_at timestamp
+}
+Ref: map_markers.initiative_id > initiatives.initiative_id
+
