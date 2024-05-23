@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { ApiError } from "../utils/Apierror.js";
+import { ApiError } from "../utils/ApiError.js";
 import { removeUnusedMulterImageFilesOnError } from "../utils/helper.js";
 import logger from "../logger/winston.logger.js";
 
