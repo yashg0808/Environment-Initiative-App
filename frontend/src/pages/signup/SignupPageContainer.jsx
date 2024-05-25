@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import useCustomNavigate from "../../protectedRoutes/useCustomNavigate";
 import { useAppSelector } from "../../store";
 import SignupPage from "./SignupPage";
+import useCustomNavigate from "../../hooks/useCustomNavigate";
 
 
 const SignupPageContainer = () => {

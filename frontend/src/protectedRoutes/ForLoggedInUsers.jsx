@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useAppSelector } from "../store";
-import useCustomNavigate from "./useCustomNavigate";
 import { ROUTE_PATHS } from "../constants";
 import { Outlet } from "react-router-dom";
+import useCustomNavigate from "../hooks/useCustomNavigate";
 
 
 const ForLoggedInUsers = () => {
@@ -23,7 +23,9 @@ const ForLoggedInUsers = () => {
   if (isLoginCheckDone) {
     return <Outlet />;
   }
-  return <></>;
+  return <>
+  You are not logged in
+  </>;
 };
 
 export default ForLoggedInUsers;

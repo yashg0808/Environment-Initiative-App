@@ -11,6 +11,7 @@ class AuthService {
     async loginService(email, password) {
         const apiRequest = new ApiRequest(`${this.USER_BASE_URL}/login`);
         const response = await apiRequest.postRequest({ email, password });
+        console.log(response)
         if (response instanceof ApiResponse && response.success) {
             return response.data;
         } else if (response instanceof ApiResponse) {

@@ -1,17 +1,9 @@
-// import { useState } from "react";
-// import { ROUTE_PATHS, SignupFormFields } from "../../../../constants";
-// import useCustomNavigate from "../../../../hooks/useCustomNavigate";
-// import Signup from "../presentation/Signup";
-// import AuthService from "../../../../services/auth/AuthService";
-// import ApiError from "../../../../services/ApiError";
-// import { USER_ROLES } from "../../../../services/auth/AuthTypes";
-
 import { useState } from "react";
-import useCustomNavigate from "../../../protectedRoutes/useCustomNavigate";
 import AuthService from "../../../services/auth/AuthService";
 import ApiError from "../../../services/ApiError";
 import { ROUTE_PATHS } from "../../../constants";
 import Signup from "./Signup";
+import useCustomNavigate from "../../../hooks/useCustomNavigate";
 
 const SignupContainer = () => {
   const navigate = useCustomNavigate();
