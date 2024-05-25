@@ -106,17 +106,17 @@ const Login = (props) => {
         />
       </div>
 
-      <Button
+      {/* <Button
         className={`px-4 py-2 capitalize mt-4 flex justify-center items-center gap-4`}
         type="button"
         buttonType={ButtonTypes.secondaryButton}
         onClickHandler={googleLoginClickHandler}
       >
         <>
-          {/* <GoogleIcon className="w-6 h-6" /> */}
-          {/* <span>{t("signInWithGoogle")}</span> */}
+          <GoogleIcon className="w-6 h-6" />
+          <span>{t("signInWithGoogle")}</span>
         </>
-      </Button>
+      </Button> */}
 
       <Link
         text={("dontHaveAnAccountSignUp")}

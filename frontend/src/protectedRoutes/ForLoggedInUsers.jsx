@@ -6,9 +6,14 @@ import useCustomNavigate from "../hooks/useCustomNavigate";
 
 
 const ForLoggedInUsers = () => {
-  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+  const isLoggedIn = useAppSelector((state) => {
+    return state.auth.isLoggedIn;
+  });
+
   const isLoginCheckDone = useAppSelector(
-    (state) => state.auth.isLogInCheckDone
+    (state) => {
+      return state.auth.isLogInCheckDone
+    }
   );
 
   const navigate = useCustomNavigate();
@@ -18,6 +23,8 @@ const ForLoggedInUsers = () => {
     if (isLoginCheckDone && !isLoggedIn) {
       navigate(ROUTE_PATHS.login);
     }
+    console.log("isLoggedIn:", isLoggedIn);
+    console.log("isLoginCheckDone:", isLoginCheckDone);
   }, [isLoginCheckDone, isLoggedIn, navigate]);
 
   if (isLoginCheckDone) {

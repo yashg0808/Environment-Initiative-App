@@ -36,7 +36,6 @@ const LoginContainer = () => {
       setErrorMessage(response.errorResponse?.message || response.errorMessage);
     } else {
       // Logged In
-      console.log(response.user)
       dispatch(logIn(response.user));
       const previousRoute = location.state?.from;
       if (previousRoute) {

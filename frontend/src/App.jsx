@@ -25,7 +25,7 @@ function App() {
 
           {/* Secured Routes */}
           <Route element={<ForLoggedInUsers />}>
-            <Route path="protected" element={<Protected />} />
+            <Route path={ROUTE_PATHS.protected} element={<Protected />} />
           </Route>
 
         </Route>
