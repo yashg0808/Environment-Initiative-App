@@ -4,7 +4,7 @@ import ApiResponse from "../ApiResponse";
 
 class AuthService {
     constructor() {
-        this.USER_BASE_URL = "/api/v1/users";
+        this.USER_BASE_URL = "/api/v1/user";
         this.GOOGLE_LOGIN_REDIRECT_URL = "/api/v1/users/google";
     }
 
