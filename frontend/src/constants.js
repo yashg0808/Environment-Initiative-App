@@ -30,3 +30,41 @@ export const ButtonTypes =  {
   }
   
 export const  MIN_USERNAME_LENGTH = 4;
+
+export const LOCAL_STORAGE_KEYS = {
+    selectedLanguage: "lang",
+    accessToken: "accessToken",
+}
+
+export const SUPPORTED_LANGUAGES = {
+    english: "en",
+    arabic: "ar",
+    hindi: "hn"
+}
+
+export const DEFAULT_LANGUAGE = SUPPORTED_LANGUAGES.english;
+
+export const BREAKPOINTS = {
+    "sm": "640px",
+    "md": "768px",
+    "lg": "1024px",
+    "xl": "1280px",
+    "2xl": "1536px",
+}
+
+export const ARROW_BUTTONS = {
+    UP : "UP",
+    RIGHT: "RIGHT",
+    DOWN:  "DOWN", 
+    LEFT: "LEFT"
+}
+  
+export const QUERY_PARAMS = {
+    ProfileSearch : "profile",
+}
+  
+export const DropdownTypes = {
+    noBorderDarkBg : "noBorderDarkBg",
+    borderedLightBg : "borderedLightBg"
+  }
+  

@@ -1,23 +1,3 @@
-// import React, { ForwardedRef, useCallback, useEffect, useState } from "react";
-// import Header from "../presentation/Header";
-// import useCustomNavigate from "../../../../hooks/useCustomNavigate";
-// import AuthService from "../../../../services/auth/AuthService";
-// import ApiError from "../../../../services/ApiError";
-// import {
-//   logIn,
-//   logOut,
-//   updateLoginCheckDone,
-// } from "../../../../store/AuthSlice";
-// import {
-//   NavigationOption,
-//   ROUTE_PATHS,
-//   QUERY_PARAMS,
-// } from "../../../../constants";
-// import { getNavigationItemList } from "../../../../data/applicationData";
-// import { useAppDispatch, useAppSelector } from "../../../../store";
-// import { getUserCartThunk, resetCartSlice } from "../../../../store/CartSlice";
-// import { createSearchParams } from "react-router-dom";
-
 import React, { useCallback, useEffect } from "react";
 import useCustomNavigate from "../../../../hooks/useCustomNavigate";
 import { useAppDispatch, useAppSelector } from "../../../../store";
@@ -25,6 +5,8 @@ import AuthService from "../../../../services/auth/AuthService";
 import ApiError from "../../../../services/ApiError";
 import { logIn, logOut, updateLoginCheckDone } from "../../../../store/AuthSlice";
 import Header from "./Header";
+import { QUERY_PARAMS, ROUTE_PATHS } from "../../../../constants";
+import { createSearchParams } from "react-router-dom";
 
 const HeaderContainer = React.forwardRef(function HeaderContainer(
   _,
@@ -53,16 +35,16 @@ const HeaderContainer = React.forwardRef(function HeaderContainer(
   }, [dispatch]);
 
   /* Navigate to /product-search?productNameSearch=<inputText> */
-  // const searchHandler = (inputText) => {
-  //   if (inputText) {
-  //     navigate({
-  //       pathname: ROUTE_PATHS.productSearch,
-  //       search: createSearchParams({
-  //         [QUERY_PARAMS.productNameSearch]: inputText,
-  //       }).toString(),
-  //     });
-  //   }
-  // };
+  const searchHandler = (inputText) => {
+    if (inputText) {
+      navigate({
+        pathname: ROUTE_PATHS.productSearch,
+        search: createSearchParams({
+          [QUERY_PARAMS.productNameSearch]: inputText,
+        }).toString(),
+      });
+    }
+  };
 
   /* Fetch Current User: To determine login status */
   useEffect(() => {
@@ -91,7 +73,7 @@ const HeaderContainer = React.forwardRef(function HeaderContainer(
       // navItemList={navigationList}
       // itemsInCart={userCart ? userCart.items.length : 0}
       // cartClickHandler={cartClickHandler}
-      // searchHandler={searchHandler}
+      searchHandler={searchHandler}
     />
   );
 });

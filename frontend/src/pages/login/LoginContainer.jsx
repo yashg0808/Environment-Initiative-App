@@ -13,7 +13,6 @@ const LoginPageContainer = () => {
             return state.auth.isLoggedIn;
         }
     );
-
     /* If the user is logged in navigate to home */
     useEffect(() => {
         if(isLoggedIn){

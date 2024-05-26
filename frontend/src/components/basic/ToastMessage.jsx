@@ -7,6 +7,8 @@ import TickIcon from "../icons/TickIcon";
 const ToastMessage = ({className}) => {
   /* Toast message state from redux */
   const message = useAppSelector((state) => state.toastMessage);
+  const isRTL = useAppSelector((state) => state.language.isRTL);
+
 
   /* Whether success message is shown */
   const isSuccessMessage = useMemo(() => {
@@ -24,6 +26,7 @@ const ToastMessage = ({className}) => {
         >
           <div
             className={`flex items-center justify-between px-14 py-2 gap-x-2 shadow-xl rounded bg-[#dbd7d7]`}
+            dir={isRTL ? "rtl" : "ltr"}
           >
             {isSuccessMessage ? (
               <TickIcon
