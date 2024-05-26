@@ -6,11 +6,13 @@ import { BREAKPOINTS } from "../../../../constants";
 import InfoHeaderContainer from "../../infoheader/InfoHeaderContainer";
 // import Hamburger from "../../../basic/Hamburger";
 import SearchInput from "../../../basic/SearchInput";
+import Hamburger from "../../../basic/Hamburger";
+import NavList from "../../../basic/NavList";
 
 const Header = forwardRef(function Header(props, ref) {
 
   const {logoClickHandler, 
-    // navItemList, 
+    navItemList, 
     // itemsInCart = 0, 
     // cartClickHandler, 
     searchHandler
@@ -30,10 +32,10 @@ const Header = forwardRef(function Header(props, ref) {
           className={`flex items-center justify-between px-2 pb-4 mt-4 border-b-2 border-b-neutral-100`}
           dir={isRTL ? 'rtl' : 'ltr'}
         >
-          {/* <Hamburger
+          <Hamburger
             headingText={t("companyName")}
-            // navList={navItemList}
-          /> */}
+            navList={navItemList}
+          />
           <SearchInput
             placeholder={t("searchProductsPlaceholder")}
             className="flex-1 mx-8"
@@ -61,7 +63,7 @@ const Header = forwardRef(function Header(props, ref) {
           {t("Env Initiative App")}
         </button>
 
-        {/* <NavList navList={navItemList} className="w-1/3" /> */}
+        <NavList navList={navItemList} className="w-1/3" />
 
         <div className={`flex w-2/6`}>
           <SearchInput

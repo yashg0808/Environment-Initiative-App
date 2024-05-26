@@ -21,20 +21,21 @@ import Input from "../../basic/Input";
 import { ButtonTypes, LinkTypes, REGEX_PATTERNS } from "../../../constants";
 import Button from "../../basic/Button";
 import Link from "../../basic/Link";
+import { useAppSelector } from "../../../store";
+import { useTranslation } from "react-i18next";
 
 const Login = (props) => {
   const {
     loginClickHandler,
-    googleLoginClickHandler,
     forgotPasswordClickHandler,
     signupClickHandler,
     isLoading = false,
     apiError = "",
   } = props;
 
-//   const isRTL = useAppSelector((state) => state.language.isRTL);
+  const isRTL = useAppSelector((state) => state.language.isRTL);
 
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
 
   const {
     register,
@@ -48,10 +49,10 @@ const Login = (props) => {
       onSubmit={handleSubmit(loginClickHandler)}
     >
       <Text className="capitalize text-2xl tracking-wider font-poppinsMedium self-center lg:self-auto">
-        {("login")}
+        {t("login")}
       </Text>
       <Text className="capitalize mt-6 self-center lg:self-auto">
-        {("enterYourDetailsBelow")}
+        {t("enterYourDetailsBelow")}
       </Text>
       {apiError && (
         <ErrorMessage
@@ -61,28 +62,28 @@ const Login = (props) => {
         />
       )}
       <Input
-        placeholder={("email")}
+        placeholder={t("email")}
         type="text"
         className="mt-12 placeholder:capitalize"
         autoComplete="username"
         errorMessage={errors.email?.message || ""}
         {...register("email", {
-          required: ("emailIsRequired"),
+          required: t("emailIsRequired"),
           validate: {
             matchPattern: (value) =>
               REGEX_PATTERNS.emailPattern.test(value) ||
-              ("invalidEmailAddress"),
+              t("invalidEmailAddress"),
           },
         })}
       />
 
       <Input
-        placeholder={("password")}
+        placeholder={t("password")}
         type="password"
         className="mt-10 placeholder:capitalize"
         autoComplete="current-password"
         errorMessage={errors.password?.message || ""}
-        {...register("password", { required: ("passwordIsRequired") })}
+        {...register("password", { required: t("passwordIsRequired") })}
       />
 
       <div
@@ -96,10 +97,10 @@ const Login = (props) => {
           onClickHandler={() => {}}
           isLoading={isLoading}
         >
-          <span>{("login")}</span>
+          <span>{t("login")}</span>
         </Button>
         <Link
-          text={("forgotPassword")}
+          text={t("forgotPassword")}
           linkType={LinkTypes.red}
           onClick={forgotPasswordClickHandler}
           className="capitalize"
@@ -119,7 +120,7 @@ const Login = (props) => {
       </Button> */}
 
       <Link
-        text={("dontHaveAnAccountSignUp")}
+        text={t("dontHaveAnAccountSignUp")}
         linkType={LinkTypes.red}
         onClick={signupClickHandler}
         className="capitalize mt-4"

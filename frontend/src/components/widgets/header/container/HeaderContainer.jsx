@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import useCustomNavigate from "../../../../hooks/useCustomNavigate";
 import { useAppDispatch, useAppSelector } from "../../../../store";
 import AuthService from "../../../../services/auth/AuthService";
@@ -7,6 +7,7 @@ import { logIn, logOut, updateLoginCheckDone } from "../../../../store/AuthSlice
 import Header from "./Header";
 import { QUERY_PARAMS, ROUTE_PATHS } from "../../../../constants";
 import { createSearchParams } from "react-router-dom";
+import { getNavigationItemList } from "../../../../data/applicationData";
 
 const HeaderContainer = React.forwardRef(function HeaderContainer(
   _,
@@ -18,7 +19,7 @@ const HeaderContainer = React.forwardRef(function HeaderContainer(
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
   // const userCart = useAppSelector((state) => state.cart.userCart);
 
-  // const [navigationList, setNavigationList] = useState([]);
+  const [navigationList, setNavigationList] = useState([]);
 
   /* Navigate to /, on click of logo*/
   const logoClickHandler = () => {
@@ -62,15 +63,15 @@ const HeaderContainer = React.forwardRef(function HeaderContainer(
   // }, [dispatch, isLoggedIn]);
 
   /* Get Navigation Item List based on isLoggedIn flag */
-  // useEffect(() => {
-  //   setNavigationList(getNavigationItemList(isLoggedIn));
-  // }, [isLoggedIn]);
+  useEffect(() => {
+    setNavigationList(getNavigationItemList(isLoggedIn));
+  }, [isLoggedIn]);
 
   return (
     <Header
       ref={ref}
       logoClickHandler={logoClickHandler}
-      // navItemList={navigationList}
+      navItemList={navigationList}
       // itemsInCart={userCart ? userCart.items.length : 0}
       // cartClickHandler={cartClickHandler}
       searchHandler={searchHandler}

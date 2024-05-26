@@ -1,4 +1,9 @@
-import React from "react";
+// import React from "react";
+// import { useTranslation } from "react-i18next";
+// import { useAppSelector } from "../../store";
+// import CloseIcon from "../icons/CloseIcon";
+// import NavList from "./NavList";
+
 import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../../store";
 import CloseIcon from "../icons/CloseIcon";

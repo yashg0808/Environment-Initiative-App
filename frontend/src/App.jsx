@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Pagelayout />}> 
           {/* Unsecured Routes */}
-          <Route index element={<Home />} />
+          <Route index element={<Home/>} />
           <Route path={ROUTE_PATHS.login} element={<LoginPageContainer />} />
           <Route path={ROUTE_PATHS.about} element={<AboutPageContainer />} />
           <Route path={ROUTE_PATHS.signup} element={<SignupPageContainer />} />
