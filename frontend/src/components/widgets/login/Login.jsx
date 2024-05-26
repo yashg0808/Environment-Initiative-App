@@ -88,10 +88,10 @@ const Login = (props) => {
 
       <div
         className={`flex justify-between items-center mt-10`}
-        // dir={isRTL ? 'rtl' : 'ltr'}
+        dir={isRTL ? 'rtl' : 'ltr'}
       >
         <Button
-          className="px-4 py-2 capitalize"
+          className="px-4 py-2 capitalize text-white"
           type="submit"
           buttonType={ButtonTypes.primaryButton}
           onClickHandler={() => {}}

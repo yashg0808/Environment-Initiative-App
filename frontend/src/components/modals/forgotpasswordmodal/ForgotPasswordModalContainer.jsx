@@ -4,8 +4,7 @@
 // import AuthService from "../../../../services/auth/AuthService";
 // import ApiResponse from "../../../../services/ApiResponse";
 // import FeedbackModal from "../../feedbackmodal/presentation/FeedbackModal";
-// import { useTranslation } from "react-i18next";
-
+import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import AuthService from "../../../services/auth/AuthService";
 import ApiResponse from "../../../services/ApiResponse";
@@ -17,7 +16,7 @@ const ForgotPasswordModalContainer = (
 ) => {
   const { hideModal } = props;
 
-//   const { t } = useTranslation();
+  const { t } = useTranslation();
 
   /* API Request Loader */
   const [isLoading, setIsLoading] = useState(false);
