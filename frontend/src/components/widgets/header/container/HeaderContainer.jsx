@@ -39,9 +39,9 @@ const HeaderContainer = React.forwardRef(function HeaderContainer(
   const searchHandler = (inputText) => {
     if (inputText) {
       navigate({
-        pathname: ROUTE_PATHS.productSearch,
+        pathname: ROUTE_PATHS.profile,
         search: createSearchParams({
-          [QUERY_PARAMS.productNameSearch]: inputText,
+          [QUERY_PARAMS.ProfileSearch]: inputText,
         }).toString(),
       });
     }

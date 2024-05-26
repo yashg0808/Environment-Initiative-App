@@ -3,7 +3,8 @@ export const ROUTE_PATHS = {
     signup: "/signup",
     about: "/about",
     pageNotFound: "/pagenotfound",
-    protected: "/protected"
+    protected: "/protected",
+    profile: "/u",
 }
 
 export const REGEX_PATTERNS = {
