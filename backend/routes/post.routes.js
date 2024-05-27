@@ -1,15 +1,19 @@
 import { Router } from "express";
 import { getLoggedInUserOrIgnore, verifyJWT } from "../middlewares/auth.middleware.js";
-import { createPost, getAllPosts, getMyPosts, getPostsByUsername } from "../controller/post.controller.js";
+import { createPost, deletePost, getAllPosts, getMyPosts, getPostById, getPostsByTag, getPostsByUsername, removePostImage, updatePost } from "../controller/post.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
-import { createPostValidator, usernamePathVariableValidator } from "../validators/post.validator.js";
+import { createPostValidator, tagPathVariableValidator, updatePostValidator, usernamePathVariableValidator } from "../validators/post.validator.js";
 import { validate } from "../validators/validate.js";
+import { mongoIdPathVariableValidator } from "../validators/common/mongodb.validators.js";
+import { MAXIMUM_POST_IMAGE_COUNT } from "../constants.js";
+
 
 const router = Router();
 
 router.route("/")
     .get(getLoggedInUserOrIgnore, getAllPosts)
-    .post(verifyJWT, upload.fields([{ name: "images", maxCount: 5 }]), createPostValidator(), validate, createPost)
+    .post(verifyJWT, upload.fields([{ name: "images", maxCount: 6 }]), createPostValidator(), validate, createPost)
+
 
 router.route("/get/my").get(verifyJWT, getMyPosts);
 
@@ -42,7 +46,7 @@ router
     .patch(
         verifyJWT,
         upload.fields([
-            { name: "images", maxCount: MAXIMUM_SOCIAL_POST_IMAGE_COUNT },
+            { name: "images", maxCount: MAXIMUM_POST_IMAGE_COUNT },
         ]),
         mongoIdPathVariableValidator("postId"),
         updatePostValidator(),

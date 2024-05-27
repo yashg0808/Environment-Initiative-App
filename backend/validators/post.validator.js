@@ -1,6 +1,6 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 
-export const createPostValidator = () => {
+const createPostValidator = () => {
   return [
     body("content").trim().notEmpty().withMessage("Post content is required"),
     body("tags")
@@ -10,9 +10,33 @@ export const createPostValidator = () => {
   ];
 };
 
-export const usernamePathVariableValidator = () => {
-    return [
-      param("username").toLowerCase().notEmpty().withMessage("Invalid username"),
-    ];
-  };
-  
+const updatePostValidator = () => {
+  return [
+    body("content")
+      .trim()
+      .optional()
+      .notEmpty()
+      .withMessage("Post content cannot be empty"),
+    body("tags")
+      .optional()
+      .isArray()
+      .withMessage("Tags field must be an array"),
+  ];
+};
+
+const usernamePathVariableValidator = () => {
+  return [
+    param("username").toLowerCase().notEmpty().withMessage("Invalid username"),
+  ];
+};
+
+const tagPathVariableValidator = () => {
+  return [param("tag").notEmpty().withMessage("Tag is required")];
+};
+
+export {
+  createPostValidator,
+  updatePostValidator,
+  usernamePathVariableValidator,
+  tagPathVariableValidator,
+};

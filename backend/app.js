@@ -4,6 +4,7 @@ import { createServer } from 'http'
 import  healthcheckRoute  from './routes/healthcheck.route.js'
 import  userRoutes  from './routes/user.routes.js'
 import  profileRoutes  from './routes/profile.routes.js'
+import  postRoutes  from './routes/post.routes.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
@@ -40,6 +41,7 @@ app.use("/api/v1/healthcheck", healthcheckRoute);
 // api/user
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
+app.use("/api/v1/post", postRoutes);
 // api/profile
 // api/initiatives
 // api/actions

@@ -3,7 +3,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { Post } from "../models/posts.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
-import { getMongoosePaginationOptions } from "../utils/helper.js";
+import { getLocalPath, getMongoosePaginationOptions, getStaticFilePath, removeLocalFile } from "../utils/helper.js";
 import { MAXIMUM_POST_IMAGE_COUNT } from "../constants.js";
 import { ApiError } from "../utils/ApiError.js";
 
@@ -127,7 +127,7 @@ const createPost = asyncHandler(async (req, res) => {
   const { content, tags } = req.body;
 
   const images =
-    req.files.images && req.files.images?.length
+    req.files?.images && req.files.images?.length
       ? req.files.images.map((image) => {
           const imageUrl = getStaticFilePath(req, image.filename);
           const imageLocalPath = getLocalPath(image.filename);
@@ -136,6 +136,7 @@ const createPost = asyncHandler(async (req, res) => {
       : [];
 
   const author = req.user._id;
+  console.log(author)
 
   const post = await Post.create({
     content,
@@ -147,6 +148,7 @@ const createPost = asyncHandler(async (req, res) => {
   if (!post) {
     throw new ApiError(500, "Error while creating a post");
   }
+  console.log(post)
 
   const createdPost = await Post.aggregate([
     {
@@ -520,6 +522,8 @@ const getPostsByTag = asyncHandler(async (req, res) => {
       new ApiResponse(200, posts, `Posts with tag #${tag} fetched successfully`)
     );
 });
+
+
 
 export {
   createPost,
