@@ -1,94 +1,65 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useForm } from "react-hook-form";
 import Text from "../../basic/Text";
 import ErrorMessage from "../../basic/ErrorMessage";
 import Input from "../../basic/Input";
 import { ButtonTypes, LinkTypes, REGEX_PATTERNS } from "../../../constants";
 import Button from "../../basic/Button";
-import Link from "../../basic/Link";
 import { useAppSelector } from "../../../store";
 import { useTranslation } from "react-i18next";
-import { logOut } from '../../../store/AuthSlice';
-import { useDispatch } from "react-redux";
-import AvatarUpload from "./avatar";
+import Avatar from "./Avatar";
+import { useEffect } from "react";
+import ProfileService from "../../../services/profile/ProfileService";
 
-const UpdateProfileForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    bio: '',
-    interests:[],
-    phoneNumber: '',
-    location: '',
-  });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    axios.get('http://localhost:8000/api/v1/profile/')
-      .then((response) => {
-        setFormData({
-          name: response.data.data.name || '',
-          bio: response.data.data.bio || '',
-          interests: response.data.data.interests || '',
-          phoneNumber: response.data.data.phoneNumber || '',
-          location: response.data.data.location || '',
-        });
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
-  }, []);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios.patch('http://localhost:8000/api/v1/profile/', formData)
-      .then((response) => {
-        console.log('Profile updated:', response.data);
-      })
-      .catch((error) => {
-        console.error('There was an error updating the profile:', error);
-      });
-  };
-
-  const dispatch = useDispatch();
-  const logoutClickHandler = () => {
-    dispatch(logOut());
-  };
+const MyAccount = (props) => {
+  const {
+    updateProfileClickHandler,
+    logOutClickHandler,
+    isLoading = false,
+  } = props;
 
   const isRTL = useAppSelector((state) => state.language.isRTL);
-
   const { t } = useTranslation();
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }, reset,
+  } = useForm({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await ProfileService.getProfile();
+      const f = {
+        name: response.name || '',
+        bio: response.bio || '',
+        interests: response.interests || '',
+        phoneNumber: response.phoneNumber || '',
+        location: response.location || '',
+      };
+      reset(f);
+    };
+
+    fetchData();
+  }, [reset]);
+
+  useEffect((
+  ) => {
+    console.log(register)
+  },[register])
 
   return (
     <>
-    <Text className="capitalize text-2xl tracking-wider font-poppinsMedium self-center self-auto">
-        {t("myAccount")}
-    </Text>
-    <AvatarUpload />
-    <form className="flex flex-col p-4 p-4" onSubmit={handleSubmit}>
+    <form className="flex flex-col p-4" onSubmit={handleSubmit(updateProfileClickHandler)}>
 
       <div className='mt-10 capitalize'>
         <label>
         {t("name")}:
           <Input
             type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
+            errorMessage={errors.email?.message || ""}
+            {...register("name", {
+              required: "Name is Required",
+            })}
           />
         </label>
       </div>
@@ -97,8 +68,10 @@ const UpdateProfileForm = () => {
           {t("bio")}:
           <Input
             name="bio"
-            value={formData.bio}
-            onChange={handleChange}
+            errorMessage={errors.email?.message || ""}
+            {...register("bio", {
+              required: t("bioIsRequired"),
+            })}
           />
         </label>
       </div>
@@ -108,8 +81,7 @@ const UpdateProfileForm = () => {
           <Input
             type="text"
             name="interests"
-            value={formData.interests}
-            onChange={handleChange}
+            {...register("interests")}
           />
         </label>
       </div>
@@ -118,9 +90,14 @@ const UpdateProfileForm = () => {
         {t("phoneNumber")}:
           <Input
             type="tel"
-            name="phoneNumber"
-            value={formData.phoneNumber}
-            onChange={handleChange}
+            {...register("phoneNumber", {
+              required: t("phoneNumberIsRequired"),
+              validate: {
+                matchPattern: (value) =>
+                  REGEX_PATTERNS.phoneNumberPattern.test(value) ||
+                  t("InvalidphoneNumber"),
+              },
+            })}
           />
         </label>
       </div>
@@ -129,9 +106,9 @@ const UpdateProfileForm = () => {
         {t("location")}:
           <Input
             type="text"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
+            {...register("location", {
+              required: t("locationIsRequired")
+            })}
           />
         </label>
       </div>
@@ -144,13 +121,14 @@ const UpdateProfileForm = () => {
           type="submit"
           buttonType={ButtonTypes.primaryButton}
           onClickHandler={() => {}}
+          isLoading={isLoading}
         >
           <span>{t("updateProfile")}</span>
         </Button>
         <Button
             className="px-4 py-2 capitalize hover:bg-blue-400 text-white"
             buttonType={ButtonTypes.primaryButton}
-            onClickHandler={() => {logoutClickHandler}}
+            onClickHandler={logOutClickHandler}
         >
           <span>{t("logOut")}</span>
         </Button>
@@ -160,4 +138,4 @@ const UpdateProfileForm = () => {
   );
 };
 
-export default UpdateProfileForm;
+export default MyAccount;

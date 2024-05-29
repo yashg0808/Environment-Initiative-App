@@ -2,10 +2,34 @@ import ApiError from "../ApiError";
 import ApiRequest from "../ApiRequest";
 import ApiResponse from "../ApiResponse";
 
-class AuthService {
+class ProfileService {
     constructor() {
-        this.USER_BASE_URL = "/api/v1/user";
-        this.GOOGLE_LOGIN_REDIRECT_URL = "/api/v1/users/google";
+        this.USER_BASE_URL = "/api/v1/profile";
+    }
+
+    async updateService(name, bio, interests, phoneNumber, location) {
+        const apiRequest = new ApiRequest(`${this.USER_BASE_URL}/`);
+        const response = await apiRequest.patchRequest({ name, bio, interests, phoneNumber, location });
+        if (response instanceof ApiResponse && response.success) {
+            return response.data;
+        } else if (response instanceof ApiResponse) {
+            return new ApiError(response.message);
+        } else {
+            return response;
+        }
+    }
+    async getProfile() {
+        const apiRequest = new ApiRequest(`${this.USER_BASE_URL}/`);
+
+        const response = await apiRequest.getRequest();
+
+        if (response instanceof ApiResponse && response.success) {
+            return response.data;
+        } else if (response instanceof ApiResponse) {
+            return new ApiError(response.message);
+        } else {
+            return response;
+        }
     }
 
     async loginService(email, password) {
@@ -116,32 +140,6 @@ class AuthService {
         }
         return response;
     }
-
-    async getAvatar() {
-        const apiRequest = new ApiRequest(`${this.USER_BASE_URL}/current-user`);
-        const response = await apiRequest.getRequest();
-        if (response instanceof ApiResponse && response.success) {
-            return response.data.avatar;
-        } else if (response instanceof ApiResponse) {
-            return new ApiError(response.message);
-        } else {
-            return response;
-        }
-    }
-
-    async updateAvatar(avatar) {
-        const apiRequest = new ApiRequest(`${this.USER_BASE_URL}/avatar`);
-        const response = await apiRequest.patchRequest({ avatar }, {
-            'Content-Type': 'multipart/form-data',
-        });
-        if (response instanceof ApiResponse && response.success) {
-            return response.data.avatar;
-        } else if (response instanceof ApiResponse) {
-            return new ApiError(response.message);
-        } else {
-            return response;
-        }
-    }
 }
 
-export default new AuthService();
+export default new ProfileService();

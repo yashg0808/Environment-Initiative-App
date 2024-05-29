@@ -9,7 +9,7 @@ import PageNotFound from './pages/pagenotfound/PageNotFound'
 import ForLoggedInUsers from './protectedRoutes/ForLoggedInUsers'
 import LoginPageContainer from './pages/login/LoginContainer'
 import SignupPageContainer from './pages/signup/SignupPageContainer'
-import UpdateProfileForm from './components/widgets/myaccount/myaccount'
+import MyAccountPageContainer from './pages/myaccount/MyAccountPageContainer.jsx'
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
           {/* Secured Routes */}
           <Route element={<ForLoggedInUsers />}>
             <Route path={ROUTE_PATHS.protected} element={<Protected />} />
-            <Route path={ROUTE_PATHS.myAccount} element={<UpdateProfileForm />} />
+            <Route path={ROUTE_PATHS.myAccount} element={<MyAccountPageContainer />} />
           </Route>
 
         </Route>
