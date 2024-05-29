@@ -159,5 +159,10 @@
   "cancelled": "ألغيت",
   "delivered": "تم التوصيل",
   "pleaseSelectAOrderStatus": "يرجى تحديد حالة الطلب",
-  "ourStory": "قصتنا"
+  "ourStory": "قصتنا",
+  "name": "اسم",
+  "bio": "السيرة الذاتية",
+  "interests": "الإهتمامات",
+  "location": "موقع",
+  "updateProfile": "تحديث الملف"
 }

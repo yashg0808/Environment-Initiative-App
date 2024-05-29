@@ -159,5 +159,10 @@
   "cancelled": "cancelled",
   "delivered": "delivered",
   "pleaseSelectAOrderStatus": "please select a order status",
-  "ourStory": "our story"
+  "ourStory": "our story", 
+  "name": "name",
+  "bio": "bio",
+  "interests": "interests",
+  "location": "location",
+  "updateProfile": "update profile"
 }
