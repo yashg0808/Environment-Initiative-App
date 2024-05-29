@@ -9,7 +9,7 @@ import PageNotFound from './pages/pagenotfound/PageNotFound'
 import ForLoggedInUsers from './protectedRoutes/ForLoggedInUsers'
 import LoginPageContainer from './pages/login/LoginContainer'
 import SignupPageContainer from './pages/signup/SignupPageContainer'
-import UpdateProfileForm from './pages/myaccount.jsx/myaccountPage'
+import UpdateProfileForm from './components/widgets/myaccount/myaccount'
 
 function App() {
   return (

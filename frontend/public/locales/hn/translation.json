@@ -159,5 +159,10 @@
   "cancelled": "रद्द",
   "delivered": "वितरित",
   "pleaseSelectAOrderStatus": "कृपया एक आदेश की स्थिति चुनें",
-  "ourStory": "हमारी कहानी"
+  "ourStory": "हमारी कहानी",
+  "name": "नाम",
+  "bio": "बाइओ",
+  "interests":"रूचियाँ",
+  "location": "जगह",
+  "updateProfile": "प्रोफ़ाइल अपडेट करें"
 }
