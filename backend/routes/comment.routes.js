@@ -1,0 +1,45 @@
+import { Router } from "express";
+import {
+  addComment,
+  deleteComment,
+  getPostComments,
+  updateComment,
+} from "../controller/comment.controller.js";
+import {
+  getLoggedInUserOrIgnore,
+  verifyJWT,
+} from "../middlewares/auth.middleware.js";
+import { commentContentValidator } from "../validators/comment.validator.js";
+import { validate } from "../validators/validate.js";
+import { mongoIdPathVariableValidator } from "../validators/common/mongodb.validators.js";
+
+const router = Router();
+
+router
+  .route("/post/:postId")
+  .get(
+    getLoggedInUserOrIgnore,
+    mongoIdPathVariableValidator("postId"),
+    validate,
+    getPostComments
+  )
+  .post(
+    verifyJWT,
+    mongoIdPathVariableValidator("postId"),
+    commentContentValidator(),
+    validate,
+    addComment
+  );
+
+router
+  .route("/:commentId")
+  .delete(verifyJWT, mongoIdPathVariableValidator("commentId"), validate, deleteComment)
+  .patch(
+    verifyJWT,
+    mongoIdPathVariableValidator("commentId"),
+    commentContentValidator(),
+    validate,
+    updateComment
+  );
+
+export default router;

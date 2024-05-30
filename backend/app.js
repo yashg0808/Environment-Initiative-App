@@ -5,6 +5,10 @@ import  healthcheckRoute  from './routes/healthcheck.route.js'
 import  userRoutes  from './routes/user.routes.js'
 import  profileRoutes  from './routes/profile.routes.js'
 import  postRoutes  from './routes/post.routes.js'
+import  likeRoutes  from './routes/like.routes.js'
+import  followRoutes  from './routes/follow.routes.js'
+import  commentRoutes  from './routes/comment.routes.js'
+import  bookmarkRoutes from './routes/bookmark.routes.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
@@ -42,6 +46,10 @@ app.use("/api/v1/healthcheck", healthcheckRoute);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/post", postRoutes);
+app.use("/api/v1/like", likeRoutes);
+app.use("/api/v1/follow", followRoutes);
+app.use("/api/v1/comment", commentRoutes);
+app.use("/api/v1/bookmark", bookmarkRoutes);
 // api/profile
 // api/initiatives
 // api/actions
