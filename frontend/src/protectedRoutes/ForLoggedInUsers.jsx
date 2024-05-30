@@ -23,8 +23,6 @@ const ForLoggedInUsers = () => {
     if (isLoginCheckDone && !isLoggedIn) {
       navigate(ROUTE_PATHS.login);
     }
-    console.log("isLoggedIn:", isLoggedIn);
-    console.log("isLoginCheckDone:", isLoginCheckDone);
   }, [isLoginCheckDone, isLoggedIn, navigate]);
 
   if (isLoginCheckDone) {

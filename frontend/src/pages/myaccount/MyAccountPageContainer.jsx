@@ -10,10 +10,9 @@ const MyAccountPageContainer = () => {
     });
 
     useEffect(() => {
-        if(!isLoggedIn){
+        if (!isLoggedIn){
             navigate("/", false);
         }
-        console.log("isLoggedIn from page:" , isLoggedIn)
     },  [navigate, isLoggedIn])
   return (
     <div>
