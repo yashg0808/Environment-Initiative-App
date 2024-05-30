@@ -6,6 +6,7 @@ import { User } from "../models/user.model.js";
 import { getLocalPath, getMongoosePaginationOptions, getStaticFilePath, removeLocalFile } from "../utils/helper.js";
 import { MAXIMUM_POST_IMAGE_COUNT } from "../constants.js";
 import { ApiError } from "../utils/ApiError.js";
+import { Bookmark } from "../models/bookmark.model.js";
 
 const postCommonAggregation = (req) => {
   return [
