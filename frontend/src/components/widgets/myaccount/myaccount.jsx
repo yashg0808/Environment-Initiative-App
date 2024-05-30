@@ -1,12 +1,9 @@
 import { useForm } from "react-hook-form";
-import Text from "../../basic/Text";
-import ErrorMessage from "../../basic/ErrorMessage";
 import Input from "../../basic/Input";
-import { ButtonTypes, LinkTypes, REGEX_PATTERNS } from "../../../constants";
+import { ButtonTypes, REGEX_PATTERNS } from "../../../constants";
 import Button from "../../basic/Button";
 import { useAppSelector } from "../../../store";
 import { useTranslation } from "react-i18next";
-import Avatar from "./Avatar";
 import { useEffect } from "react";
 import ProfileService from "../../../services/profile/ProfileService";
 
@@ -44,8 +41,8 @@ const MyAccount = (props) => {
 
   useEffect((
   ) => {
-    console.log(register)
-  },[register])
+    console.log(errors)
+  },[errors])
 
   return (
     <>
@@ -56,7 +53,7 @@ const MyAccount = (props) => {
         {t("name")}:
           <Input
             type="text"
-            errorMessage={errors.email?.message || ""}
+            errorMessage={errors.name?.message || ""}
             {...register("name", {
               required: "Name is Required",
             })}
@@ -67,8 +64,7 @@ const MyAccount = (props) => {
         <label>
           {t("bio")}:
           <Input
-            name="bio"
-            errorMessage={errors.email?.message || ""}
+            errorMessage={errors.bio?.message || ""}
             {...register("bio", {
               required: t("bioIsRequired"),
             })}
@@ -90,6 +86,7 @@ const MyAccount = (props) => {
         {t("phoneNumber")}:
           <Input
             type="tel"
+            errorMessage={errors.phoneNumber?.message || ""}
             {...register("phoneNumber", {
               required: t("phoneNumberIsRequired"),
               validate: {
@@ -106,6 +103,7 @@ const MyAccount = (props) => {
         {t("location")}:
           <Input
             type="text"
+            errorMessage={errors.location?.message || ""}
             {...register("location", {
               required: t("locationIsRequired")
             })}
