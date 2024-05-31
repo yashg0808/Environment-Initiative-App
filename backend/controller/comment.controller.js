@@ -31,7 +31,7 @@ const getPostComments = asyncHandler(async (req, res) => {
     },
     {
       $lookup: {
-        from: "sociallikes",
+        from: "likes",
         localField: "_id",
         foreignField: "commentId",
         as: "likes",
@@ -39,7 +39,7 @@ const getPostComments = asyncHandler(async (req, res) => {
     },
     {
       $lookup: {
-        from: "sociallikes",
+        from: "likes",
         localField: "_id",
         foreignField: "commentId",
         as: "isLiked",
@@ -54,7 +54,7 @@ const getPostComments = asyncHandler(async (req, res) => {
     },
     {
       $lookup: {
-        from: "socialprofiles",
+        from: "profiles",
         localField: "author",
         foreignField: "owner",
         as: "author",

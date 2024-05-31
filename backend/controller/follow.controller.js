@@ -73,7 +73,7 @@ const getFollowersListByUserName = asyncHandler(async (req, res) => {
     {
       $lookup: {
         // lookup for the each user's profile
-        from: "socialprofiles",
+        from: "profiles",
         localField: "_id",
         foreignField: "owner",
         as: "profile",
@@ -132,7 +132,7 @@ const getFollowersListByUserName = asyncHandler(async (req, res) => {
           {
             $lookup: {
               // lookup for the each user's profile
-              from: "socialprofiles",
+              from: "profiles",
               localField: "_id",
               foreignField: "owner",
               as: "profile",
@@ -247,7 +247,7 @@ const getFollowingListByUserName = asyncHandler(async (req, res) => {
     {
       $lookup: {
         // lookup for the each user's profile
-        from: "socialprofiles",
+        from: "profiles",
         localField: "_id",
         foreignField: "owner",
         as: "profile",
@@ -307,7 +307,7 @@ const getFollowingListByUserName = asyncHandler(async (req, res) => {
           {
             $lookup: {
               // lookup for the each user's profile
-              from: "socialprofiles",
+              from: "profiles",
               localField: "_id",
               foreignField: "owner",
               as: "profile",
