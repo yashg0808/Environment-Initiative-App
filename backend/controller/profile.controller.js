@@ -5,6 +5,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { getLocalPath, getStaticFilePath, removeLocalFile } from "../utils/helper.js";
+import { Follow } from "../models/follow.model.js";
 
 const getUserProfile = async (userId, req) => {
     const user = await User.findById(userId);

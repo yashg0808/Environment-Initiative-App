@@ -8,6 +8,7 @@ import Header from "./Header";
 import { QUERY_PARAMS, ROUTE_PATHS } from "../../../../constants";
 import { createSearchParams } from "react-router-dom";
 import { getNavigationItemList } from "../../../../data/applicationData";
+import ProfileService from "../../../../services/profile/ProfileService";
 
 const HeaderContainer = React.forwardRef(function HeaderContainer(
   _,
@@ -17,7 +18,6 @@ const HeaderContainer = React.forwardRef(function HeaderContainer(
   const dispatch = useAppDispatch();
 
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
-  // const userCart = useAppSelector((state) => state.cart.userCart);
 
   const [navigationList, setNavigationList] = useState([]);
 
@@ -35,8 +35,8 @@ const HeaderContainer = React.forwardRef(function HeaderContainer(
     dispatch(updateLoginCheckDone(true));
   }, [dispatch]);
 
-  /* Navigate to /product-search?productNameSearch=<inputText> */
-  const searchHandler = (inputText) => {
+  /* Navigate to /u?profile=<inputText> */
+  const searchHandler = async (inputText) => {
     if (inputText) {
       navigate({
         pathname: ROUTE_PATHS.profile,
@@ -44,6 +44,11 @@ const HeaderContainer = React.forwardRef(function HeaderContainer(
           [QUERY_PARAMS.ProfileSearch]: inputText,
         }).toString(),
       });
+      // let params = new URL(document.location.toString()).searchParams;
+      // setUsername(params.get("profile"));
+      // console.log(username);
+      // const response = await ProfileService.getProfileByUsername(username);
+      // console.log(response);
     }
   };
 
@@ -51,16 +56,6 @@ const HeaderContainer = React.forwardRef(function HeaderContainer(
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
-
-  /* Fetch Users' Cart, when isLoggedIn flag changes in redux */
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     dispatch(getUserCartThunk());
-  //   } else {
-  //     /* Reset Cart Slice as user is logged out */
-  //     dispatch(resetCartSlice());
-  //   }
-  // }, [dispatch, isLoggedIn]);
 
   /* Get Navigation Item List based on isLoggedIn flag */
   useEffect(() => {
@@ -72,8 +67,6 @@ const HeaderContainer = React.forwardRef(function HeaderContainer(
       ref={ref}
       logoClickHandler={logoClickHandler}
       navItemList={navigationList}
-      // itemsInCart={userCart ? userCart.items.length : 0}
-      // cartClickHandler={cartClickHandler}
       searchHandler={searchHandler}
     />
   );

@@ -31,6 +31,19 @@ class ProfileService {
             return response;
         }
     }
+    async getProfileByUsername(username) {
+        const apiRequest = new ApiRequest(`${this.USER_BASE_URL}/u/${username}`);
+
+        const response = await apiRequest.getRequest();
+
+        if (response instanceof ApiResponse && response.success) {
+            return response.data;
+        } else if (response instanceof ApiResponse) {
+            return new ApiError(response.message);
+        } else {
+            return response;
+        }
+    }
 }
 
 export default new ProfileService();
