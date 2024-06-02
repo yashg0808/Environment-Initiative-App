@@ -10,6 +10,7 @@ import ForLoggedInUsers from './protectedRoutes/ForLoggedInUsers'
 import LoginPageContainer from './pages/login/LoginContainer'
 import SignupPageContainer from './pages/signup/SignupPageContainer'
 import MyAccountPageContainer from './pages/myaccount/MyAccountPageContainer.jsx'
+import ProfilePageContainer from './pages/profile/ProfilePageContainer.jsx'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path={ROUTE_PATHS.about} element={<AboutPageContainer />} />
           <Route path={ROUTE_PATHS.signup} element={<SignupPageContainer />} />
           <Route path={ROUTE_PATHS.pageNotFound} element={<PageNotFound />} />
+          <Route path={ROUTE_PATHS.profile} element={<ProfilePageContainer />} />
           <Route path="*" element={<PageNotFound />} />
 
           {/* Secured Routes */}
