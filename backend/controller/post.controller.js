@@ -207,7 +207,7 @@ const updatePost = asyncHandler(async (req, res) => {
     throw new ApiError(
       400,
       "Maximum " +
-        MAXIMUM__POST_IMAGE_COUNT +
+      MAXIMUM_POST_IMAGE_COUNT +
         " images are allowed for a post. There are already " +
         existedImages +
         " images attached to the post."
