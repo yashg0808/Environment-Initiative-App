@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ProfileService from '../../services/profile/ProfileService';
-import { set } from 'react-hook-form';
 import AuthService from '../../services/auth/AuthService';
 import useCustomNavigate from '../../hooks/useCustomNavigate';
 
@@ -24,6 +23,7 @@ const ProfilePageContainer = () => {
             await ProfileService.getProfileByUsername(username)
             .then((response) => {
                 setProfile(response);
+                console.log(response);
             })
             .catch((error) => {
                 console.log(error);
@@ -31,7 +31,11 @@ const ProfilePageContainer = () => {
         }
         
         fetchData();
-    }, [username,navigate]);
+    }, [username]);
+
+    const clickHandler = async()=>{
+        await ProfileService.followUnFollowUser(profile.account._id)
+    }
 
   return (
     <div className="container mt-5">
@@ -43,6 +47,8 @@ const ProfilePageContainer = () => {
             <p className="card-text">Phone Number: {profile.phoneNumber}</p>
             <p className="card-text">Location: {profile.location}</p>
             </div>
+            {profile.isFollowing ? (<button className="btn btn-primary" onClick={clickHandler}>Unfollow</button>)
+            : (<button className="btn btn-primary" onClick={clickHandler}>Follow</button>)}
         </div>
     </div>
   );
