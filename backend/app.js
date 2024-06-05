@@ -56,6 +56,6 @@ app.use("/api/v1/bookmark", bookmarkRoutes);
 // api/posts
 // api/challenges
 // // api/map
-// app.get("/", (req, res) => { res.send("Welcome to the backend server of the Social Media App") });
+app.get("/", (req, res) => { res.send(`frontend url: ${process.env.CORS_ORIGIN}`) });
 
 export { httpServer };
