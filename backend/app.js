@@ -58,6 +58,4 @@ app.use("/api/v1/bookmark", bookmarkRoutes);
 // api/map
 
 
-
-
 export { httpServer };
