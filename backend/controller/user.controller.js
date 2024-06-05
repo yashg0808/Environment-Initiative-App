@@ -121,7 +121,7 @@ const loginUser = asyncHandler(async (req, res) => {
 const refreshAccessToken = asyncHandler(async (req, res) => {
     const incomingRefreshToken =
         req.cookies.refreshToken || req.body.refreshToken;
-
+    console.log("incomingRefreshToken: ", incomingRefreshToken)
     if (!incomingRefreshToken) {
         throw new ApiError(401, "Unauthorized request");
     }
@@ -131,10 +131,12 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
             incomingRefreshToken,
             process.env.REFRESH_TOKEN_SECRET
         );
+        console.log("Decoded Token: ", decodedToken)
         const user = await User.findById(decodedToken?._id);
         if (!user) {
             throw new ApiError(401, "Invalid refresh token");
         }
+        console.log("User", user)
 
         // check if incoming refresh token is same as the refresh token attached in the user document
         // This shows that the refresh token is used or not
