@@ -32,6 +32,15 @@ const httpServer = createServer(app);
 
 app.use(express.static("public")); // configure static file to save images locally
 
+app.get("/", (req, res) => {
+  // print all the cors origin
+  res.json({
+    message: "Welcome to the API",
+    cors: process.env.CORS_ORIGIN?.split(","),
+  });
+
+})
+
 app.use("/api/v1/healthcheck", healthcheckRoute);
 
 // Routes required:
