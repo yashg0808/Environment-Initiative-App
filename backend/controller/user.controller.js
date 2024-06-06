@@ -72,6 +72,8 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
     const { email, username, password } = req.body;
     console.log(req.body)
+    console.log(process.env.NODE_ENV)
+    console.log(process.env.NODE_ENV === "production")
 
     if (!username && !email) {
         throw new ApiError(400, "Username or email is required");
@@ -98,16 +100,16 @@ const loginUser = asyncHandler(async (req, res) => {
     const loggedInUser = await User.findById(user._id).select("-password -refreshToken -emailVerificationToken -emailVerificationExpiry");
 
     // TODO: Add more options to make cookie more secure and reliable
-    const options = {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-    };
+    // const options = {
+    //     httpOnly: true,
+    //     secure: process.env.NODE_ENV === "production",
+    // };
     console.log("Login Successful")
 
     return res
         .status(200)
-        .cookie("accessToken", accessToken, options) // set the access token in the cookie
-        .cookie("refreshToken", refreshToken, options) // set the refresh token in the cookie
+        .cookie("accessToken", accessToken) // set the access token in the cookie
+        .cookie("refreshToken", refreshToken) // set the refresh token in the cookie
         .json(
             new ApiResponse(
                 200,
