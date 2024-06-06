@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import useCustomNavigate from '../../../hooks/useCustomNavigate';
 import { useDispatch } from 'react-redux';
-import MyAccount from './MyAccount';
+import MyAccount from './myaccount';
 import ProfileService from '../../../services/profile/ProfileService';
 import ApiError from '../../../services/ApiError';
 import AuthService from '../../../services/auth/AuthService';
 import Text from '../../basic/Text';
 import ErrorMessage from '../../basic/ErrorMessage';
-import Avatar from './Avatar';
+import Avatar from './avatar';
 import { useTranslation } from 'react-i18next';
 import { logOut } from '../../../store/AuthSlice';
 
