@@ -72,6 +72,8 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
     const { email, username, password } = req.body;
     console.log(req.body)
+    console.log(process.env.NODE_ENV)
+    console.log(process.env.NODE_ENV === "production")
 
     if (!username && !email) {
         throw new ApiError(400, "Username or email is required");
@@ -101,13 +103,14 @@ const loginUser = asyncHandler(async (req, res) => {
     const options = {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
+        sameSite: 'none'
     };
     console.log("Login Successful")
 
     return res
         .status(200)
-        .cookie("accessToken", accessToken, options) // set the access token in the cookie
-        .cookie("refreshToken", refreshToken, options) // set the refresh token in the cookie
+        .cookie("accessToken", accessToken) // set the access token in the cookie
+        .cookie("refreshToken", refreshToken) // set the refresh token in the cookie
         .json(
             new ApiResponse(
                 200,
@@ -121,7 +124,7 @@ const loginUser = asyncHandler(async (req, res) => {
 const refreshAccessToken = asyncHandler(async (req, res) => {
     const incomingRefreshToken =
         req.cookies.refreshToken || req.body.refreshToken;
-
+    console.log("incomingRefreshToken: ", incomingRefreshToken)
     if (!incomingRefreshToken) {
         throw new ApiError(401, "Unauthorized request");
     }
@@ -131,10 +134,12 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
             incomingRefreshToken,
             process.env.REFRESH_TOKEN_SECRET
         );
+        console.log("Decoded Token: ", decodedToken)
         const user = await User.findById(decodedToken?._id);
         if (!user) {
             throw new ApiError(401, "Invalid refresh token");
         }
+        console.log("User", user)
 
         // check if incoming refresh token is same as the refresh token attached in the user document
         // This shows that the refresh token is used or not

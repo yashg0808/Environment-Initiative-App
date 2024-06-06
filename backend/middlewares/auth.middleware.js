@@ -5,18 +5,24 @@ import jwt from "jsonwebtoken";
 
 
 export const verifyJWT = asyncHandler(async (req, res, next) => {
+    console.log("In Verify JWT")
+    console.log("Cookies: ", req.cookies)
+    console.log("Headers: ", req.headers.Authorization)
     const token =
         req.cookies?.accessToken ||
         req.header("Authorization")?.replace("Bearer ", "");
+    console.log("Token: ", token)
     if (!token) {
         throw new ApiError(401, "Unauthorized request");
     }
     try {
         const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        console.log("Decoded: ",decodedToken)
         const user = await User.findById(decodedToken?._id).select("-password -refreshToken -emailVerificationToken -emailVerificationExpiry");
+        console.log("User: ", user)
         if (!user) {
             // Client should make a request to /api/v1/user/refresh-token if they have refreshToken present in their cookie
-            // Then they will get a new access token which will allow them to refresh the access token without logging out the user
+            // Then they will get a new access token which will allow them to refresh the access token without logging out the user)
             throw new ApiError(401, "Invalid access token");
         }
         req.user = user;
