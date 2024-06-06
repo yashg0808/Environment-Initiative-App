@@ -13,31 +13,15 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
 const app = express();
-
-const allowedOrigins = process.env.CORS_ORIGIN?.split(",") || ["*"];
-
-// app.use(
-//     cors({
-//       origin:
-//         process.env.CORS_ORIGIN === "*"
-//           ? "*" // This might give CORS error for some origins due to credentials set to true
-//           : process.env.CORS_ORIGIN?.split(","), // For multiple cors origin for production. Refer https://github.com/hiteshchoudhary/apihub/blob/a846abd7a0795054f48c7eb3e71f3af36478fa96/.env.sample#L12C1-L12C12
-//       credentials: true,
-//     })
-// );
-
-app.use(cors({
-  origin: function(origin, callback) {
-    // Allow requests with no origin like mobile apps or curl requests
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
-  credentials: true
-}));
+app.use(
+    cors({
+      origin:
+        process.env.CORS_ORIGIN === "*"
+          ? "*" // This might give CORS error for some origins due to credentials set to true
+          : process.env.CORS_ORIGIN?.split(","), // For multiple cors origin for production. Refer https://github.com/hiteshchoudhary/apihub/blob/a846abd7a0795054f48c7eb3e71f3af36478fa96/.env.sample#L12C1-L12C12
+      credentials: true,
+    })
+);
   
 
 app.use(bodyParser.json());
