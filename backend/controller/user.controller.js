@@ -100,10 +100,11 @@ const loginUser = asyncHandler(async (req, res) => {
     const loggedInUser = await User.findById(user._id).select("-password -refreshToken -emailVerificationToken -emailVerificationExpiry");
 
     // TODO: Add more options to make cookie more secure and reliable
-    // const options = {
-    //     httpOnly: true,
-    //     secure: process.env.NODE_ENV === "production",
-    // };
+    const options = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: 'none'
+    };
     console.log("Login Successful")
 
     return res
