@@ -7,6 +7,7 @@ import { getLocalPath, getMongoosePaginationOptions, getStaticFilePath, removeLo
 import { MAXIMUM_POST_IMAGE_COUNT } from "../constants.js";
 import { ApiError } from "../utils/ApiError.js";
 import { Bookmark } from "../models/bookmark.model.js";
+import { uploadImage } from "../utils/cloudinary.js";
 
 const postCommonAggregation = (req) => {
   return [
@@ -129,15 +130,16 @@ const createPost = asyncHandler(async (req, res) => {
 
   const images =
     req.files?.images && req.files.images?.length
-      ? req.files.images.map((image) => {
+      ? await Promise.all(req.files.images.map(async (image) => {
           const imageUrl = getStaticFilePath(req, image.filename);
           const imageLocalPath = getLocalPath(image.filename);
-          return { url: imageUrl, localPath: imageLocalPath };
-        })
+          const url = await uploadImage(imageLocalPath, image.filename)
+          removeLocalFile(imageLocalPath);
+          return { url: url, localPath: imageLocalPath };
+        }))
       : [];
 
   const author = req.user._id;
-  console.log(author)
 
   const post = await Post.create({
     content,
@@ -149,7 +151,7 @@ const createPost = asyncHandler(async (req, res) => {
   if (!post) {
     throw new ApiError(500, "Error while creating a post");
   }
-  console.log(post)
+  console.log("Post:",post)
 
   const createdPost = await Post.aggregate([
     {

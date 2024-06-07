@@ -1,9 +1,8 @@
-// src/App.js
-
 import React, { useState, useEffect } from 'react';
 import Post from './post';
 import Pagination from './pagination';
 import './App.css';
+import PostService from '../../services/post/PostService';
 
 const App = () => {
   const [posts, setPosts] = useState([]);
@@ -17,18 +16,12 @@ const App = () => {
   }, [page]);
 
   const fetchPosts = async (page) => {
-    try {
-      const response = await fetch(`http://localhost:8000/api/v1/post?page=${page}&limit=10`);
-      const data = await response.json();
-      if (data.success) {
-        setPosts(data.data.posts);
-        setTotalPosts(data.data.totalPosts);
-        setHasNextPage(data.data.hasNextPage);
-        setHasPrevPage(data.data.hasPrevPage);
-      }
-    } catch (error) {
-      console.error("Error fetching posts:", error);
-    }
+      const data = await PostService.getPosts(page, 10);
+      console.log(data)
+      setPosts(data.posts);
+      setTotalPosts(data.totalPosts);
+      setHasNextPage(data.hasNextPage);
+      setHasPrevPage(data.hasPrevPage);
   };
 
   const handlePageChange = (newPage) => {
@@ -36,11 +29,12 @@ const App = () => {
   };
 
   return (
-    <div className="App">
-      <h1>Posts</h1>
-      {posts.map(post => (
-        <Post key={post._id} post={post} />
-      ))}
+    <div className="App w-full mx-auto">
+      <div className='flex flex-col items-center'>
+        {posts.map(post => (
+          <Post key={post._id} post={post} />
+        ))}
+      </div>
       <Pagination
         page={page}
         hasNextPage={hasNextPage}

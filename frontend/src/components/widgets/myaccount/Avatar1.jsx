@@ -15,7 +15,7 @@ const Avatar = (props) => {
       <img
         src={image.url}
         alt="Profile Avatar"
-        className="w-48 h-48 rounded-full object-cover mb-4 shadow-lg"
+        className="w-48 h-48 rounded-full object-cover mb-4 shadow-lg max-w-full z-[999]"
       />
       <form onSubmit={handleAvatarSubmit} className="w-full max-w-sm">
         <input

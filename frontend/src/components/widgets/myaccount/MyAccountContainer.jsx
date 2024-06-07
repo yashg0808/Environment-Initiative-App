@@ -117,8 +117,10 @@ function MyAccountContainer() {
                     message={errorMessage}
                 />
             )}
-            <CoverPic  coverPic={coverPic} handleCoverPicSubmit={handleCoverPicSubmit} isLoading={isLoading} selectedCoverPic={selectedCoverPic} setSelectedCoverPic={setSelectedCoverPic} />
-            <Avatar image={image} handleAvatarSubmit={handleAvatarSubmit} isLoading={isLoading} selectedFile={selectedFile} setSelectedFile={setSelectedFile} />
+            <div className='block relative mx-auto'>
+                <CoverPic className="block relative h-[437px] overflow-hidden z-10"  coverPic={coverPic} handleCoverPicSubmit={handleCoverPicSubmit} isLoading={isLoading} selectedCoverPic={selectedCoverPic} setSelectedCoverPic={setSelectedCoverPic} />
+                <Avatar className="block relative border-[3px] border-[#d0efff] rounded-[5px] w-[200px] h-[200px] mt-[-100px] mb-[10px] ml-[20px] z-[999]" image={image} handleAvatarSubmit={handleAvatarSubmit} isLoading={isLoading} selectedFile={selectedFile} setSelectedFile={setSelectedFile} />
+            </div>
             <MyAccount
                 updateProfileClickHandler={updateProfileClickHandler}
                 logOutClickHandler={logOutClickHandler}
