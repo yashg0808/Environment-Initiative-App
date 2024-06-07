@@ -13,6 +13,7 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
 const app = express();
+
 app.use(
     cors({
       origin:
@@ -31,6 +32,7 @@ app.use(cookieParser());
 const httpServer = createServer(app);
 
 app.use(express.static("public")); // configure static file to save images locally
+
 
 app.get("/", (req, res) => {
   // print all the cors origin
@@ -57,9 +59,7 @@ app.use("/api/v1/bookmark", bookmarkRoutes);
 // api/actions
 // api/posts
 // api/challenges
-// api/map
-
-
-
+// // api/map
+app.get("/", (req, res) => { res.send(`frontend url: ${process.env.CORS_ORIGIN}`) });
 
 export { httpServer };

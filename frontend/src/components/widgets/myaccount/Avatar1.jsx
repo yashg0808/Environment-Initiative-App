@@ -11,21 +11,24 @@ const Avatar = (props) => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 flex flex-col items-center">
       <img
         src={image.url}
-        width={500}
-        height={500}
-        className="img-fluid rounded "
+        alt="Profile Avatar"
+        className="w-48 h-48 rounded-full object-cover mb-4 shadow-lg"
       />
-      <form onSubmit={handleAvatarSubmit}>
+      <form onSubmit={handleAvatarSubmit} className="w-full max-w-sm">
         <input
           type="file"
-          className="form-control-file"
+          className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none mb-4"
           id="avatar"
           onChange={handleFileChange}
         />
-        <button type="submit" className="btn btn-primary" disabled={isLoading}>
+        <button
+          type="submit"
+          className={`w-full py-2 px-4 rounded text-white font-semibold ${isLoading ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'}`}
+          disabled={isLoading}
+        >
           {isLoading ? "Uploading..." : "Upload"}
         </button>
       </form>

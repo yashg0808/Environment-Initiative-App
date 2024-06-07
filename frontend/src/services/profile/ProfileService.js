@@ -58,6 +58,19 @@ class ProfileService {
             return response;
         }
     }
+    async updateCoverPic(coverImage) {
+        const apiRequest = new ApiRequest(`${this.USER_BASE_URL}/cover-image`)
+        const response = await apiRequest.patchRequest({ coverImage }, {
+            'Content-Type': 'multipart/form-data',
+        });
+        if (response instanceof ApiResponse && response.success) {
+            return response.data.avatar;
+        } else if (response instanceof ApiResponse) {
+            return new ApiError(response.message);
+        } else {
+            return response;
+        }
+    }
 }
 
 export default new ProfileService();

@@ -18,6 +18,8 @@ function MyAccountContainer() {
     const [errorMessage, setErrorMessage] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
     const [image, setImage] = useState("");
+    const [selectedCoverPic, setSelectedCoverPic] = useState(null);
+    const [coverPic, setCoverPic] = useState("");
 
 
     const handleAvatarSubmit = async (e) => {
@@ -36,6 +38,25 @@ function MyAccountContainer() {
             setErrorMessage(response.errorResponse?.message || response.errorMessage);
         } else {
             alert('Avatar updated successfully!');
+        }
+    }
+
+    const handleCoverPicSubmit = async (e) => {
+        e.preventDefault();
+        if (!selectedCoverPic) {
+            setErrorMessage("Please select a file");
+            return;
+        }
+        setIsLoading(true);
+        const response = await ProfileService.updateCoverPic(selectedCoverPic);
+        const profileData = await ProfileService.getProfile();
+        const coverPic = profileData.coverImage;
+        setCoverPic(coverPic);
+        setIsLoading(false);
+        if (response instanceof ApiError) {
+            setErrorMessage(response.errorResponse?.message || response.errorMessage);
+        } else {
+            alert('CoverPic updated successfully!');
         }
     }
     
@@ -75,23 +96,27 @@ function MyAccountContainer() {
     useEffect(() => {
         const fetchData = async () => {
             const response = await AuthService.getAvatar();
+            console.log(response)
             setImage(response);
+            const profileData = await ProfileService.getProfile();
+            setCoverPic(profileData.coverImage);
         }
         fetchData();
     },[]);
 
     return (
-        <div>
-            <Text className="capitalize text-2xl tracking-wider font-poppinsMedium self-center">
-            {t("myAccount")}
+        <div className="mx-auto max-w-lg p-4">
+            <Text className="capitalize text-3xl font-bold text-gray-800 mb-6 text-center">
+                {t("myAccount")}
             </Text>
             {errorMessage && (
                 <ErrorMessage
-                className="text-sm mt-1"
-                errorIconClassName="w-4 h-4"
-                message={errorMessage}
+                    className="text-sm mt-1"
+                    errorIconClassName="w-4 h-4"
+                    message={errorMessage}
                 />
             )}
+            <CoverPic  coverPic={coverPic} handleCoverPicSubmit={handleCoverPicSubmit} isLoading={isLoading} selectedCoverPic={selectedCoverPic} setSelectedCoverPic={setSelectedCoverPic} />
             <Avatar image={image} handleAvatarSubmit={handleAvatarSubmit} isLoading={isLoading} selectedFile={selectedFile} setSelectedFile={setSelectedFile} />
             <MyAccount
                 updateProfileClickHandler={updateProfileClickHandler}
@@ -99,8 +124,8 @@ function MyAccountContainer() {
                 isLoading={isLoading}
                 apiError={errorMessage}
                 handleAvatarSubmit={handleAvatarSubmit}
-                selectedFile = {selectedFile}  
-                setSelectedFile = {setSelectedFile}
+                selectedFile={selectedFile}  
+                setSelectedFile={setSelectedFile}
             />
         </div>
     )
