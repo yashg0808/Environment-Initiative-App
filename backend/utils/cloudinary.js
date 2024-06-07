@@ -6,6 +6,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+
 async function uploadImage(localfilepath, filename) {
   let cloudinaryurl;
   await cloudinary.uploader.upload(
