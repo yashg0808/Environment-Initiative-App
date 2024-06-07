@@ -8,8 +8,9 @@ import Text from '../../basic/Text';
 import ErrorMessage from '../../basic/ErrorMessage';
 import { useTranslation } from 'react-i18next';
 import { logOut } from '../../../store/AuthSlice';
-import MyAccount from './Myaccount1';
 import Avatar from './Avatar1';
+import MyAccount from './MyAccount1';
+import CoverPic from '../coverimage/CoverPic';
 
 function MyAccountContainer() {
     const dispatch = useDispatch();
