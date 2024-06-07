@@ -17,6 +17,7 @@ class ApiRequest {
   }
 
   async postRequest(body, headers = {}) {
+    console.log("Body", body)
     return await asyncHandler(async () => {
       const response = await axios.post(this.url, body, { headers: headers });
       return response;

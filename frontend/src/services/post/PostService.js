@@ -18,6 +18,32 @@ class PostService {
             return response;
         }
     }
+
+    async createPost(content,tags,imgs) {
+        console.log("In Create Post Service")
+        const apiRequest = new ApiRequest(this.USER_BASE_URL);
+        const images = []
+        console.log("Content:",content)
+        console.log("Tags:",tags)
+        imgs.forEach(image => {
+            images.push(image.file)
+        });
+        console.log("Images:",images)
+        const response = await apiRequest.postRequest({
+            content,
+            tags,
+            images
+        }, {
+            'Content-Type': 'multipart/form-data',
+        });
+        if (response instanceof ApiResponse && response.success) {
+            return response.data;
+        } else if (response instanceof ApiResponse) {
+            return new ApiError(response.message);
+        } else {
+            return response;
+        }
+    }
 }
 
 export default new PostService();

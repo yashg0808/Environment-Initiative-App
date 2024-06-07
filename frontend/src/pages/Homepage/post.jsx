@@ -8,7 +8,6 @@ import CommentService from '../../services/comment/CommentService';
 import BookmarkService from '../../services/bookmark/BookmarkService';
 
 const Post = ({ post }) => {
-  console.log(post)
     const [isLiked, setIsLiked] = useState(post.isLiked);
     const [isBookmarked, setIsBookmarked] = useState(post.isBookmarked);
     const [likes, setLikes] = useState(post.likes);
@@ -55,7 +54,7 @@ const Post = ({ post }) => {
     };
 
     return (
-        <div className="post max-w-lg max-h-lvh bg-white p-6 rounded-lg shadow-md mb-6">
+        <div className="post max-w-lg w-full max-h-lvh bg-white p-6 rounded-lg shadow-md mb-6">
             <div className="post-header flex items-center mb-4">
               <div className='flex items-center'>
                 <img 

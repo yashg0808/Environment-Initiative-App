@@ -126,6 +126,8 @@ const postCommonAggregation = (req) => {
 };
 
 const createPost = asyncHandler(async (req, res) => {
+  console.log("In Create Post")
+
   const { content, tags } = req.body;
 
   const images =
@@ -138,9 +140,8 @@ const createPost = asyncHandler(async (req, res) => {
           return { url: url, localPath: imageLocalPath };
         }))
       : [];
-
+  console.log("Images:",images)
   const author = req.user._id;
-
   const post = await Post.create({
     content,
     tags: tags || [],
