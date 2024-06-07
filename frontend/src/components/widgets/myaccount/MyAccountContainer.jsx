@@ -33,7 +33,6 @@ function MyAccountContainer() {
         setErrorMessage(null);
         const response = await AuthService.updateAvatar(selectedFile);
         const image = await AuthService.getAvatar();
-        console.log(image.url)
         setImage(image);
         setIsLoading(false);
         if (response instanceof ApiError) {
@@ -49,11 +48,12 @@ function MyAccountContainer() {
             setErrorMessage("Please select a file");
             return;
         }
+        setIsLoading(true);
         const response = await ProfileService.updateCoverPic(selectedCoverPic);
         const profileData = await ProfileService.getProfile();
         const coverPic = profileData.coverImage;
         setCoverPic(coverPic);
-        console.log(coverPic.url)
+        setIsLoading(false);
         if (response instanceof ApiError) {
             setErrorMessage(response.errorResponse?.message || response.errorMessage);
         } else {
@@ -97,7 +97,10 @@ function MyAccountContainer() {
     useEffect(() => {
         const fetchData = async () => {
             const response = await AuthService.getAvatar();
+            console.log(response)
             setImage(response);
+            const profileData = await ProfileService.getProfile();
+            setCoverPic(profileData.coverImage);
         }
         fetchData();
     },[]);

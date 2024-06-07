@@ -142,6 +142,17 @@ class AuthService {
             return response;
         }
     }
+    async getAavatarById(userId) {
+        const apiRequest = new ApiRequest(`${this.USER_BASE_URL}/avatar`);
+        const response = await apiRequest.postRequest({ id:userId });
+        if (response instanceof ApiResponse && response.success) {
+            return response.data.url;
+        } else if (response instanceof ApiResponse) {
+            return new ApiError(response.message);
+        } else {
+            return response;
+        }
+    }
 }
 
 export default new AuthService();
