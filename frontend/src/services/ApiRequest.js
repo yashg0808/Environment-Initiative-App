@@ -11,36 +11,37 @@ class ApiRequest {
       const response = await axios.get(this.url, {
         params: queryParams,
         headers: headers,
+        withCredentials: true,
       });
       return response;
     });
   }
 
-  async postRequest(body, headers = {}) {
+  async postRequest(body, headers = {withCredentials: true}) {
     console.log("Body", body)
     return await asyncHandler(async () => {
-      const response = await axios.post(this.url, body, { headers: headers });
+      const response = await axios.post(this.url, body, { headers: headers, withCredentials: true });
       return response;
     });
   }
 
   async putRequest(body, headers = {}) {
     return await asyncHandler(async () => {
-      const response = await axios.put(this.url, body, { headers: headers });
+      const response = await axios.put(this.url, body, { headers: headers ,withCredentials: true, });
       return response;
     });
   }
 
   async deleteRequest(headers = {}) {
     return await asyncHandler(async () => {
-      const response = await axios.delete(this.url, { headers: headers });
+      const response = await axios.delete(this.url, { headers: headers, withCredentials: true, });
       return response;
     });
   }
 
   async patchRequest(body, headers = {}) {
     return await asyncHandler(async () => {
-      const response = await axios.patch(this.url, body, { headers: headers });
+      const response = await axios.patch(this.url, body, { headers: headers, withCredentials: true, });
       return response;
     });
   }
