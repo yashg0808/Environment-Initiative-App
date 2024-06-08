@@ -13,6 +13,7 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
 const app = express();
+app.use(cookieParser());
 
 const allowedOrigins = process.env.CORS_ORIGIN?.split(",") || [];
 
@@ -26,22 +27,22 @@ app.use(
     })
 );
 
-app.use(function(req, res, next) {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(String(origin).trim())) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  } else {
-    console.log("origin", origin)
-    console.log("Allowed origins", allowedOrigins)
-  }
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
+// app.use(function(req, res, next) {
+//   const origin = req.headers.origin;
+//   if (allowedOrigins.includes(String(origin).trim())) {
+//     res.setHeader("Access-Control-Allow-Origin", origin);
+//   } else {
+//     console.log("origin", origin)
+//     console.log("Allowed origins", allowedOrigins)
+//   }
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   res.header("Access-Control-Allow-Credentials", "true");
+//   next();
+// });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
+
 
 const httpServer = createServer(app);
 

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import Post from './post';
 import Pagination from './pagination';
 import './App.css';
 import PostService from '../../services/post/PostService';
 import CreatePost from './CreatePost';
 import { useAppSelector } from '../../store';
+import Post from '../../components/widgets/posts/Post';
+import useCustomNavigate from '../../hooks/useCustomNavigate';
 
 const App = () => {
+  const navigate = useCustomNavigate();
   const [posts, setPosts] = useState([]);
   const [totalPosts, setTotalPosts] = useState(0);
   const [page, setPage] = useState(1);
@@ -53,7 +55,7 @@ const App = () => {
             )}
           </>
         ) : (
-          <div className="w-full max-w-lg p-4 bg-white shadow-lg rounded-lg cursor-pointer m-6">
+          <div onClick={()=>{navigate("/login")}} className="w-full max-w-lg p-4 bg-white shadow-lg rounded-lg cursor-pointer m-6">
                 <p className="text-gray-600">{"Please Login to Create Posts."}</p>
           </div>
         )}
