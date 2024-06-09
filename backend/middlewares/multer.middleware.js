@@ -16,11 +16,13 @@ const storage = multer.diskStorage({
                 file.originalname.lastIndexOf(".")
             );
         }
+        console.log("File Extension:", fileExtension)
         const filenameWithoutExtension = file.originalname
             .toLowerCase()
             .split(" ")
             .join("-")
             ?.split(".")[0];
+        console.log("Filename without extension:", filenameWithoutExtension)
         cb(
             null,
             filenameWithoutExtension +

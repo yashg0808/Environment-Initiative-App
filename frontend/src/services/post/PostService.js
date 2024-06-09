@@ -24,12 +24,12 @@ class PostService {
         const apiRequest = new ApiRequest(`${this.USER_BASE_URL}/`);
         const formData = new FormData();
         formData.append('content', content);
-        tags.forEach((tag) => {
-            formData.append(`tags`, tag);
+        tags.forEach((tag, index) => {
+            formData.append(`tags[${index}]`, tag);
         });
-        for(let i=0;i<imgs.length;i++){
-            formData.append('images', imgs[i].file);
-        }
+        imgs.forEach((img, index) => {
+            formData.append('images', img.file);
+        });
         const response = await apiRequest.postRequest(formData, {
             'Content-Type': 'multipart/form-data',
         });

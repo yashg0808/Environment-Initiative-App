@@ -51,11 +51,11 @@ const CreatePost = ({ fetchPosts, setIsExpanded }) => {
     <form onSubmit={handleSubmit(handlePostSubmit)} className="mx-auto w-full max-w-lg bg-white shadow-md rounded-lg overflow-hidden mb-6">
       <div className="p-4">
         <label className="block mb-2 text-sm font-medium text-gray-600">Content</label>
-        <textarea
+         <textarea
           {...register('content')}
-          className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+          className="w-full p-2 h-48 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           placeholder="Write your post content..."
-        ></textarea>
+      />
       </div>
       <div className="p-4">
         <label className="block mb-2 text-sm font-medium text-gray-600">Tags</label>
