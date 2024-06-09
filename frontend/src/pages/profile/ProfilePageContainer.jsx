@@ -17,10 +17,10 @@ const ProfilePageContainer = () => {
     const fetchData = async () => {
       try {
         const currentUser = await AuthService.getCurrentUser();
-        if (currentUser.username === username) {
-          navigate(ROUTE_PATHS.myAccount);
-          return;
-        }
+        // if (currentUser.username === username) {
+        //   navigate(ROUTE_PATHS.myAccount);
+        //   return;
+        // }
         const profileData = await ProfileService.getProfileByUsername(username);
         const image = await AuthService.getAavatarById(profileData.owner);
         setImage(image);
@@ -49,7 +49,6 @@ const ProfilePageContainer = () => {
       }));
     } catch (error) {
       console.log(error);
-      // Optionally, add user notification here
     }
   };
 

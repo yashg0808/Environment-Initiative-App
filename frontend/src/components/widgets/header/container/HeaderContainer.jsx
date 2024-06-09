@@ -8,7 +8,6 @@ import Header from "./Header";
 import { QUERY_PARAMS, ROUTE_PATHS } from "../../../../constants";
 import { createSearchParams } from "react-router-dom";
 import { getNavigationItemList } from "../../../../data/applicationData";
-import ProfileService from "../../../../services/profile/ProfileService";
 
 const HeaderContainer = React.forwardRef(function HeaderContainer(
   _,
@@ -18,6 +17,7 @@ const HeaderContainer = React.forwardRef(function HeaderContainer(
   const dispatch = useAppDispatch();
 
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+  const username = useAppSelector((state) => state.auth.userDetails?.username);
 
   const [navigationList, setNavigationList] = useState([]);
 
@@ -44,22 +44,14 @@ const HeaderContainer = React.forwardRef(function HeaderContainer(
           [QUERY_PARAMS.ProfileSearch]: inputText,
         }).toString(),
       });
-      // let params = new URL(document.location.toString()).searchParams;
-      // setUsername(params.get("profile"));
-      // console.log(username);
-      // const response = await ProfileService.getProfileByUsername(username);
-      // console.log(response);
     }
   };
-
-  /* Fetch Current User: To determine login status */
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
 
-  /* Get Navigation Item List based on isLoggedIn flag */
   useEffect(() => {
-    setNavigationList(getNavigationItemList(isLoggedIn));
+    setNavigationList(getNavigationItemList(isLoggedIn,username));
   }, [isLoggedIn]);
 
   return (

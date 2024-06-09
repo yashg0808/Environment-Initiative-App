@@ -153,6 +153,18 @@ class AuthService {
             return response;
         }
     }
+
+    async resendEmailVerification() {
+        const apiRequest = new ApiRequest(`${this.USER_BASE_URL}/resend-email-verification`);
+        const response = await apiRequest.postRequest();
+        if (response instanceof ApiResponse && response.success) {
+            return response;
+        } else if (response instanceof ApiResponse) {
+            return new ApiError(response.message);
+        } else {
+            return response;
+        }
+    }
 }
 
 export default new AuthService();

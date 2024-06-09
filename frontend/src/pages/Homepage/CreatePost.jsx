@@ -14,11 +14,6 @@ const CreatePost = ({ setIsExpanded }) => {
       const { content } = data;
       const response = await PostService.createPost(content,tags,images);
       console.log("Response:", response);
-
-    //   reset();
-    //   setTags([]);
-    //   setImages([]);
-    //   setIsExpanded(false);
     } catch (error) {
       console.error('Failed to create post', error);
     } finally {
