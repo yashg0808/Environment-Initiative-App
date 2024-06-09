@@ -15,11 +15,8 @@ const Skeleton = ({ type }) => {
         return <div className={`${skeletonClasses} w-full h-48 rounded-md`} />;
       case 'post':
         return (
-          <div className="mb-4">
-            <div className={`${skeletonClasses} h-6 w-1/2 mb-2`} />
-            <div className={`${skeletonClasses} h-4 mb-2`} />
-            <div className={`${skeletonClasses} h-4 w-3/4`} />
-          </div>
+            <div className={`${skeletonClasses} post h-64 max-w-lg w-screen max-h-lvh p-6 rounded-lg shadow-md mb-6`}>
+            </div>
         );
       default:
         return null;

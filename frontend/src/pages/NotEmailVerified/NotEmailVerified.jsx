@@ -7,7 +7,6 @@ import { useAppSelector } from '../../store';
 import useCustomNavigate from '../../hooks/useCustomNavigate';
 
 const NotEmailVerified = () => {
-
   const isLoggedIn = useAppSelector((state) => {
     return state.auth.isLoggedIn;
   });
@@ -50,6 +49,9 @@ const NotEmailVerified = () => {
   };
 
   useEffect(() => {
+    if (isLoginCheckDone && !isLoggedIn) {
+      navigate("/")
+    }
     if (isLoginCheckDone && isEmailVerified === true) {
       navigate("/");
     }

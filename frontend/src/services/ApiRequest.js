@@ -18,7 +18,6 @@ class ApiRequest {
   }
 
   async postRequest(body, headers = {withCredentials: true}) {
-    console.log("Body", body)
     return await asyncHandler(async () => {
       const response = await axios.post(this.url, body, { headers: headers, withCredentials: true });
       return response;
