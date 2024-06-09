@@ -115,9 +115,12 @@ const loginUser = asyncHandler(async (req, res) => {
   // TODO: Add more options to make cookie more secure and reliable
   const options = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    sameSite: "none",
+    secure: true,
   };
   console.log("Login Successful");
+  console.log("Access Token: ", accessToken)
+  console.log("Refresh Token: ", refreshToken)
 
   return res
     .status(200)

@@ -15,7 +15,7 @@ const CoverPic = (props) => {
         <img
           src={coverPic.url}
           alt="Cover Pic"
-          className="w-48 h-48 rounded-full object-cover mb-4 shadow-lg"
+          className="w-48 h-48 rounded-full object-cover mb-4 shadow-lg max-w-full z-10"
         />
         <form onSubmit={handleCoverPicSubmit} className="w-full max-w-sm">
           <input

@@ -13,21 +13,36 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
 const app = express();
+app.use(cookieParser());
+
+const allowedOrigins = process.env.CORS_ORIGIN?.split(",") || [];
 
 app.use(
     cors({
       origin:
         process.env.CORS_ORIGIN === "*"
-          ? "*" // This might give CORS error for some origins due to credentials set to true
-          : process.env.CORS_ORIGIN?.split(","), // For multiple cors origin for production. Refer https://github.com/hiteshchoudhary/apihub/blob/a846abd7a0795054f48c7eb3e71f3af36478fa96/.env.sample#L12C1-L12C12
+          ? "*" 
+          : process.env.CORS_ORIGIN?.split(","),
       credentials: true,
     })
 );
-  
+
+// app.use(function(req, res, next) {
+//   const origin = req.headers.origin;
+//   if (allowedOrigins.includes(String(origin).trim())) {
+//     res.setHeader("Access-Control-Allow-Origin", origin);
+//   } else {
+//     console.log("origin", origin)
+//     console.log("Allowed origins", allowedOrigins)
+//   }
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   res.header("Access-Control-Allow-Credentials", "true");
+//   next();
+// });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
+
 
 const httpServer = createServer(app);
 
@@ -42,6 +57,7 @@ app.get("/", (req, res) => {
   });
 
 })
+
 
 app.use("/api/v1/healthcheck", healthcheckRoute);
 
