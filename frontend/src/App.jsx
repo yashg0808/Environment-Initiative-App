@@ -33,7 +33,6 @@ function App() {
             <Route path={ROUTE_PATHS.myAccount} element={<MyAccountPageContainer />} />
             <Route path={ROUTE_PATHS.notemailverified} element={<NotEmailVerified />} />
           </Route>
-
         </Route>
       </Routes>
     </div>

@@ -69,7 +69,7 @@ const App = () => {
                 <p className="text-gray-600">{"What's on your mind?"}</p>
               </div>
             ) : (
-              <CreatePost setIsExpanded={setIsExpanded} onCreatePost={onCreatePost} />
+              <CreatePost fetchPosts={fetchPosts} setIsExpanded={setIsExpanded} onCreatePost={onCreatePost} />
             )}
           </>
         ) : (<>

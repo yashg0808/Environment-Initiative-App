@@ -126,9 +126,10 @@ const postCommonAggregation = (req) => {
 };
 
 const createPost = asyncHandler(async (req, res) => {
-
+  console.log("In Create Post Route")
   const { content, tags } = req.body;
-
+  console.log("Req Body:",req.body)
+  console.log("Req Files:",req.files)
   const images =
     req.files?.images && req.files.images?.length
       ? await Promise.all(req.files.images.map(async (image) => {

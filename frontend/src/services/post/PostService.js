@@ -21,19 +21,16 @@ class PostService {
 
     async createPost(content,tags,imgs) {
         console.log("In Create Post Service")
-        const apiRequest = new ApiRequest(this.USER_BASE_URL);
-        const images = []
-        console.log("Content:",content)
-        console.log("Tags:",tags)
-        imgs.forEach(image => {
-            images.push(image.file)
+        const apiRequest = new ApiRequest(`${this.USER_BASE_URL}/`);
+        const formData = new FormData();
+        formData.append('content', content);
+        tags.forEach((tag) => {
+            formData.append(`tags`, tag);
         });
-        console.log("Images:",images)
-        const response = await apiRequest.postRequest({
-            content,
-            tags,
-            images
-        }, {
+        for(let i=0;i<imgs.length;i++){
+            formData.append('images', imgs[i].file);
+        }
+        const response = await apiRequest.postRequest(formData, {
             'Content-Type': 'multipart/form-data',
         });
         if (response instanceof ApiResponse && response.success) {

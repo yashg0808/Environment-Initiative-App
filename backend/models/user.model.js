@@ -70,7 +70,7 @@ userSchema.pre("save", async function (next) {
 userSchema.post("save", async function (user, next) {
     const profile = await Profile.findOne({ owner: user._id });
     if (!profile) { // setup profile for the user
-        await Profile.create({ owner: user._id, name: user.username });
+        await Profile.create({ owner: user._id });
     }
     next();
 });
