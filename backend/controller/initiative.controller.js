@@ -3,6 +3,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { Initiative } from "../models/initiative.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
+import { Supporter } from "../models/supporter.model.js";
 import { getLocalPath, getMongoosePaginationOptions, getStaticFilePath, removeLocalFile } from "../utils/helper.js";
 import { MAXIMUM_INITIATIVE_IMAGE_COUNT } from "../constants.js";
 import { ApiError } from "../utils/ApiError.js";
@@ -10,6 +11,19 @@ import { uploadImage } from "../utils/cloudinary.js";
 
 const initiativeCommonAggregation = (req) => {
   return [
+    {
+      $lookup: {
+        from: "supporters",
+        localField: "_id",
+        foreignField: "supportedInitiative",
+        as: "supporters",
+      },
+    },
+    {
+      $addFields: {
+        supporterCount: { $size: "$supporters" },
+      },
+    },
     {
       $lookup: {
         from: "users",

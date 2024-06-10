@@ -7,6 +7,10 @@ const initiativeSchema = new Schema({
       required: true,
       trim: true,
     },
+    amountReceived: {
+      type: Number,
+      default: 0,
+    },
     description: {
       type: String,
       required: true,
@@ -29,9 +33,10 @@ const initiativeSchema = new Schema({
       type: [String],
       required: true,
     },
-    tags: [{
+    tags: {
       type: [String],
-    }],
+      default: [],
+    },
     status: {
       type: String,
       enum: ['planned', 'in-progress', 'completed'],
@@ -46,9 +51,9 @@ const initiativeSchema = new Schema({
       description: String,
     }],
     supporters: [{
-      type: [Schema.Types.ObjectId],
-      ref: 'User',
-    }],
+    type: Schema.Types.ObjectId,
+    ref: 'Supporter',
+  }],
     impactMetrics: {
       carbonReduction: {
         type: Number, // in tons
