@@ -53,6 +53,18 @@ class PostService {
             return response;
         }
     }
+
+    async getPostById(postId) {
+        const apiRequest = new ApiRequest(`${this.USER_BASE_URL}/${postId}`);
+        const response = await apiRequest.getRequest();
+        if (response instanceof ApiResponse && response.success) {
+            return response.data;
+        } else if (response instanceof ApiResponse) {
+            return new ApiError(response.message);
+        } else {
+            return response;
+        }
+    }
 }
 
 export default new PostService();

@@ -12,6 +12,7 @@ import SignupPageContainer from './pages/signup/SignupPageContainer'
 import MyAccountPageContainer from './pages/myaccount/MyAccountPageContainer.jsx'
 import ProfilePageContainer from './pages/profile/ProfilePageContainer.jsx'
 import NotEmailVerified from './pages/NotEmailVerified/NotEmailVerified.jsx'
+import PostPage from './pages/Post/PostPage.jsx'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path={ROUTE_PATHS.signup} element={<SignupPageContainer />} />
           <Route path={ROUTE_PATHS.pageNotFound} element={<PageNotFound />} />
           <Route path={ROUTE_PATHS.profile} element={<ProfilePageContainer />} />
+          <Route path={ROUTE_PATHS.post} element={<PostPage/>} />
           <Route path="*" element={<PageNotFound />} />
 
           {/* Secured Routes */}

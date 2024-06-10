@@ -7,13 +7,15 @@ export const ROUTE_PATHS = {
     profile: "/u",
     myAccount:"/my-account",
     notemailverified: "/notemailverified",
+    post: "/post/:postId"
 }
 
 export const REGEX_PATTERNS = {
     emailPattern : /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
     numberPattern: /^[0-9]*$/,
     countryCodePattern: /^\+[0-9]{1,3}$/,
-    phoneNumberPattern: /^[0-9]{10}$/
+    phoneNumberPattern: /^[0-9]{10}$/,
+    usernamePattern: /^[a-z0-9_]{3,}$/
 }
 
 export const TOAST_MESSAGE_TYPES = {

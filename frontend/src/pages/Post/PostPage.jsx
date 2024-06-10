@@ -1,22 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import LikeService from "../../../services/like/LikeService";
-import BookmarkService from "../../../services/bookmark/BookmarkService";
-import CommentService from "../../../services/comment/CommentService";
-import ApiError from "../../../services/ApiError";
-import useCustomNavigate from "../../../hooks/useCustomNavigate";
-import { ROUTE_PATHS } from "../../../constants";
+import LikeService from "../../services/like/LikeService";
+import BookmarkService from "../../services/bookmark/BookmarkService";
+import ApiError from "../../services/ApiError";
+import CommentService from "../../services/comment/CommentService";
+import { ROUTE_PATHS } from "../../constants";
+import useCustomNavigate from "../../hooks/useCustomNavigate";
+import PostService from "../../services/post/PostService";
 
-const Post = ({ post }) => {
+const PostPage = () => {
+  const { postId } = useParams();
   const navigate = useCustomNavigate();
-  const [isLiked, setIsLiked] = useState(post.isLiked);
-  const [isBookmarked, setIsBookmarked] = useState(post.isBookmarked);
-  const [likes, setLikes] = useState(post.likes);
-  const [loading, setLoading] = useState(false);
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [likes, setLikes] = useState(0);
   const [commentText, setCommentText] = useState("");
-  const [comments, setComments] = useState(post.comments);
+  const [comments, setComments] = useState(0);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        setLoading(true);
+        const response = await PostService.getPostById(postId);
+        console.log(response)
+        if (response instanceof ApiError) {
+            navigate(ROUTE_PATHS.pageNotFound);   
+        }
+        setPost(response);
+        setIsLiked(response.isLiked);
+        setIsBookmarked(response.isBookmarked);
+        setLikes(response.likes);
+        setComments(response.comments);
+      } catch (error) {
+        console.error("Error fetching post data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPost();
+  }, [postId]);
 
   const handleLike = async () => {
     setLoading(true);
@@ -68,6 +96,19 @@ const Post = ({ post }) => {
     adaptiveHeight: true,
   };
 
+  if (loading) {
+    return (
+      <div className="post max-w-lg w-full max-h-lvh bg-white p-6 rounded-lg shadow-md mb-6">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-300 rounded w-3/4 mb-4"></div>
+          <div className="h-6 bg-gray-300 rounded w-1/2 mb-4"></div>
+          <div className="h-64 bg-gray-300 rounded mb-4"></div>
+          <div className="h-6 bg-gray-300 rounded w-1/4 mb-4"></div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="post max-w-lg w-full max-h-lvh bg-white p-6 rounded-lg shadow-md mb-6">
       <div
@@ -92,9 +133,7 @@ const Post = ({ post }) => {
           </p>
         </div>
       </div>
-      <div className="cursor-pointer" onClick={()=> {
-        navigate(`/post/${post._id}`);
-      }}>
+      <div className="cursor-pointer" onClick={() => { navigate(`/post/${post._id}`); }}>
         <div className="post-content mb-4">
           <p className="text-gray-700 mb-4">{post.content}</p>
           {post.images.length > 0 && (
@@ -234,8 +273,16 @@ const Post = ({ post }) => {
           Submit
         </button>
       </div>
+      {post.author.account._id === "CURRENT_USER_ID" && ( // Replace "CURRENT_USER_ID" with the ID of the current user
+        <button
+          onClick={() => navigate(`/edit-post/${post._id}`)}
+          className="edit-button bg-green-500 text-white px-4 py-2 rounded-lg mt-4"
+        >
+          Edit Post
+        </button>
+      )}
     </div>
   );
 };
 
-export default Post;
+export default PostPage;
