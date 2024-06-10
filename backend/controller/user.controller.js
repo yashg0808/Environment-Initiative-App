@@ -82,7 +82,6 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const loginUser = asyncHandler(async (req, res) => {
   const { email, username, password } = req.body;
-  console.log(req.body);
 
   if (!username && !email) {
     throw new ApiError(400, "Username or email is required");
@@ -118,9 +117,6 @@ const loginUser = asyncHandler(async (req, res) => {
     sameSite: "none",
     secure: true,
   };
-  console.log("Login Successful");
-  console.log("Access Token: ", accessToken)
-  console.log("Refresh Token: ", refreshToken)
 
   return res
     .status(200)
@@ -139,7 +135,6 @@ const loginUser = asyncHandler(async (req, res) => {
 const refreshAccessToken = asyncHandler(async (req, res) => {
     const incomingRefreshToken =
         req.cookies.refreshToken || req.body.refreshToken;
-    console.log("incomingRefreshToken: ", incomingRefreshToken)
     if (!incomingRefreshToken) {
         throw new ApiError(401, "Unauthorized request");
     }
@@ -149,12 +144,10 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
             incomingRefreshToken,
             process.env.REFRESH_TOKEN_SECRET
         );
-        console.log("Decoded Token: ", decodedToken)
         const user = await User.findById(decodedToken?._id);
         if (!user) {
             throw new ApiError(401, "Invalid refresh token");
         }
-        console.log("User", user)
 
         // check if incoming refresh token is same as the refresh token attached in the user document
         // This shows that the refresh token is used or not

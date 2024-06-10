@@ -2,23 +2,27 @@ import multer from "multer";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
+        console.log("In destination")
         // This storage needs public/images folder in the root directory
         // Else it will throw an error saying cannot find path public/images
         cb(null, "./public/images");
     },
     // Store file in a .png/.jpeg/.jpg format instead of binary
     filename: function (req, file, cb) {
+        console.log("In filename")
         let fileExtension = "";
         if (file.originalname.split(".").length > 1) {
             fileExtension = file.originalname.substring(
                 file.originalname.lastIndexOf(".")
             );
         }
+        console.log("File Extension:", fileExtension)
         const filenameWithoutExtension = file.originalname
             .toLowerCase()
             .split(" ")
             .join("-")
             ?.split(".")[0];
+        console.log("Filename without extension:", filenameWithoutExtension)
         cb(
             null,
             filenameWithoutExtension +

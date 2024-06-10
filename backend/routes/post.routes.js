@@ -12,12 +12,7 @@ const router = Router();
 
 router.route("/")
     .get(getLoggedInUserOrIgnore, getAllPosts)
-    .post(verifyJWT,(req,res,next)=>{
-        console.log("Inside Post Route")
-        console.log("Req Body:",req.body)
-        console.log("Req Files:",req.files)
-        next()
-    } ,upload.fields([{ name: "images", maxCount: MAXIMUM_POST_IMAGE_COUNT }]), createPostValidator(), validate, createPost)
+    .post(verifyJWT,upload.fields([{ name: "images", maxCount: MAXIMUM_POST_IMAGE_COUNT }]), createPostValidator(), validate, createPost)
 
 
 router.route("/get/my").get(verifyJWT, getMyPosts);

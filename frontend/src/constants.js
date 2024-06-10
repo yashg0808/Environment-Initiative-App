@@ -5,7 +5,8 @@ export const ROUTE_PATHS = {
     pageNotFound: "/pagenotfound",
     protected: "/protected",
     profile: "/u",
-    myAccount:"/my-account"
+    myAccount:"/my-account",
+    notemailverified: "/notemailverified",
 }
 
 export const REGEX_PATTERNS = {

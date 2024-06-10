@@ -11,6 +11,7 @@ import LoginPageContainer from './pages/login/LoginContainer'
 import SignupPageContainer from './pages/signup/SignupPageContainer'
 import MyAccountPageContainer from './pages/myaccount/MyAccountPageContainer.jsx'
 import ProfilePageContainer from './pages/profile/ProfilePageContainer.jsx'
+import NotEmailVerified from './pages/NotEmailVerified/NotEmailVerified.jsx'
 
 function App() {
   return (
@@ -30,8 +31,8 @@ function App() {
           <Route element={<ForLoggedInUsers />}>
             <Route path={ROUTE_PATHS.protected} element={<Protected />} />
             <Route path={ROUTE_PATHS.myAccount} element={<MyAccountPageContainer />} />
+            <Route path={ROUTE_PATHS.notemailverified} element={<NotEmailVerified />} />
           </Route>
-
         </Route>
       </Routes>
     </div>

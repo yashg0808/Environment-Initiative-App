@@ -16,12 +16,19 @@ const ForLoggedInUsers = () => {
     }
   );
 
+  const isEmailVerified = useAppSelector(
+    (state) => {
+      return state.auth.userDetails?.isEmailVerified;
+    }
+  );
   const navigate = useCustomNavigate();
 
 
   useEffect(() => {
     if (isLoginCheckDone && !isLoggedIn) {
       navigate(ROUTE_PATHS.login);
+    } else if (isLoginCheckDone && isEmailVerified === false) {
+      navigate(ROUTE_PATHS.notemailverified);
     }
   }, [isLoginCheckDone, isLoggedIn, navigate]);
 

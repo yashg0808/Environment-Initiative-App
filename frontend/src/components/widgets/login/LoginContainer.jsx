@@ -41,7 +41,7 @@ const LoginContainer = () => {
       if (previousRoute) {
         navigate(previousRoute, true);
       } else {
-        navigate("/protected");
+        navigate("/");
       }
     }
   };

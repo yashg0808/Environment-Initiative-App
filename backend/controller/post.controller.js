@@ -126,10 +126,10 @@ const postCommonAggregation = (req) => {
 };
 
 const createPost = asyncHandler(async (req, res) => {
-  console.log("In Create Post")
-
+  console.log("In Create Post Route")
   const { content, tags } = req.body;
-
+  console.log("Req Body:",req.body)
+  console.log("Req Files:",req.files)
   const images =
     req.files?.images && req.files.images?.length
       ? await Promise.all(req.files.images.map(async (image) => {
@@ -140,7 +140,6 @@ const createPost = asyncHandler(async (req, res) => {
           return { url: url, localPath: imageLocalPath };
         }))
       : [];
-  console.log("Images:",images)
   const author = req.user._id;
   const post = await Post.create({
     content,
@@ -152,7 +151,6 @@ const createPost = asyncHandler(async (req, res) => {
   if (!post) {
     throw new ApiError(500, "Error while creating a post");
   }
-  console.log("Post:",post)
 
   const createdPost = await Post.aggregate([
     {
