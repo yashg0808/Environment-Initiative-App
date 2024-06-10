@@ -166,7 +166,6 @@ export const updateCoverImage = asyncHandler(async (req, res) => {
     },
     { new: true }
   );
-  console.log(updatedProfile);
 
   // remove the old cover image
   removeLocalFile(coverImageLocalPath);

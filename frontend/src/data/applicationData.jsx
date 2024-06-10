@@ -16,15 +16,15 @@ export const DRAWER_ITEMS = [
     },
 ];
 
-export const getNavigationItemList = (isLoggedIn) => {
+export const getNavigationItemList = (isLoggedIn,username) => {
     const tempDrawerItems = [...DRAWER_ITEMS];
     if (isLoggedIn) {
       tempDrawerItems.pop();
+      tempDrawerItems.pop();
       tempDrawerItems.push({
         id: 4,
-        textKey: "myAccount",
-        navigateTo: "my-account",
-        // customComponent: <MyAccountOptionContainer />
+        textKey: "My Account",
+        navigateTo: `/u?profile=${username}`,
       });
     }
     return tempDrawerItems;

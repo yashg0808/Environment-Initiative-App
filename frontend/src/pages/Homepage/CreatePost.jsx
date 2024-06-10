@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import PostService from '../../services/post/PostService';
 
-const CreatePost = ({ setIsExpanded }) => {
-  const { register, handleSubmit, control, reset } = useForm();
+const CreatePost = ({ fetchPosts, setIsExpanded }) => {
+  const { register, handleSubmit, reset } = useForm();
   const [tags, setTags] = useState([]);
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -13,16 +13,16 @@ const CreatePost = ({ setIsExpanded }) => {
     try {
       const { content } = data;
       const response = await PostService.createPost(content,tags,images);
+      reset();
+      setImages([]);
+      setTags([]);
+      fetchPosts();
       console.log("Response:", response);
-
-    //   reset();
-    //   setTags([]);
-    //   setImages([]);
-    //   setIsExpanded(false);
     } catch (error) {
       console.error('Failed to create post', error);
     } finally {
       setIsLoading(false);
+      setIsExpanded(false);
     }
   };
 
@@ -51,11 +51,11 @@ const CreatePost = ({ setIsExpanded }) => {
     <form onSubmit={handleSubmit(handlePostSubmit)} className="mx-auto w-full max-w-lg bg-white shadow-md rounded-lg overflow-hidden mb-6">
       <div className="p-4">
         <label className="block mb-2 text-sm font-medium text-gray-600">Content</label>
-        <textarea
+         <textarea
           {...register('content')}
-          className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+          className="w-full p-2 h-48 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           placeholder="Write your post content..."
-        ></textarea>
+      />
       </div>
       <div className="p-4">
         <label className="block mb-2 text-sm font-medium text-gray-600">Tags</label>

@@ -7,6 +7,7 @@ import BookmarkService from '../../../services/bookmark/BookmarkService';
 import CommentService from '../../../services/comment/CommentService';
 import ApiError from '../../../services/ApiError';
 import useCustomNavigate from '../../../hooks/useCustomNavigate';
+import { ROUTE_PATHS } from '../../../constants';
 
 const Post = ({ post }) => {
     const navigate = useCustomNavigate();
@@ -21,6 +22,7 @@ const Post = ({ post }) => {
         setLoading(true);
         const response= await LikeService.likePostService(post._id);
         if(response instanceof ApiError){
+            navigate(ROUTE_PATHS.login)
           console.log(response.errorMessage);
         }else{
           setIsLiked(!isLiked);
@@ -31,7 +33,11 @@ const Post = ({ post }) => {
 
     const handleBookmark = async () => {
         setLoading(true);
-        await BookmarkService.BookMarkPost(post._id);
+        const response = await BookmarkService.BookMarkPost(post._id);
+        if(response instanceof ApiError){
+            navigate(ROUTE_PATHS.login)
+            console.log(response.errorMessage);
+        }
         setIsBookmarked(!isBookmarked);
         setLoading(false);
     };
@@ -42,7 +48,11 @@ const Post = ({ post }) => {
 
     const handleCommentSubmit = async () => {
         setComments(comments+1);
-        await CommentService.addNewCommentService(post._id,commentText);
+        const response = await CommentService.addNewCommentService(post._id,commentText);
+        if(response instanceof ApiError){
+            navigate(ROUTE_PATHS.login)
+            console.log(response.errorMessage);
+        }
         setCommentText('');
     };
 

@@ -13,7 +13,6 @@ async function uploadImage(localfilepath, filename) {
     localfilepath,
     { public_id: filename },
     function (error, result) {
-      console.log("Cloudinary URL: ", result.url);
       cloudinaryurl = result.url;
     }
   );
