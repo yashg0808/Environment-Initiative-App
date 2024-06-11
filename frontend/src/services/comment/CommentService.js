@@ -7,6 +7,7 @@ class CommentService {
         this.USER_BASE_URL = "/api/v1/comment";
       
     }
+
     async GetCommentService(postId)  {
         const apiRequest = new ApiRequest(`${this.USER_BASE_URL}/post/${postId}`);
         const response = await apiRequest.getRequest();
@@ -18,6 +19,7 @@ class CommentService {
             return response;
         }
     }
+    
     async addNewCommentService(postId,comment)  {
         const apiRequest = new ApiRequest(`${this.USER_BASE_URL}/post/${postId}`);
         const response = await apiRequest.postRequest({content:comment});

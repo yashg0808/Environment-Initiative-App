@@ -1,54 +1,52 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import LikeService from "../../services/like/LikeService";
-import BookmarkService from "../../services/bookmark/BookmarkService";
-import ApiError from "../../services/ApiError";
-import CommentService from "../../services/comment/CommentService";
-import { ROUTE_PATHS } from "../../constants";
-import useCustomNavigate from "../../hooks/useCustomNavigate";
-import PostService from "../../services/post/PostService";
+import useCustomNavigate from '../../hooks/useCustomNavigate';
+import LikeService from '../../services/like/LikeService';
+import ApiError from '../../services/ApiError';
+import { ROUTE_PATHS } from '../../constants';
+import BookmarkService from '../../services/bookmark/BookmarkService';
+import CommentService from '../../services/comment/CommentService';
+import { useParams } from 'react-router-dom';
+import PostService from '../../services/post/PostService';
 
-const PostPage = () => {
+function PostPage() {
   const { postId } = useParams();
   const navigate = useCustomNavigate();
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [isLiked, setIsLiked] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false);
-  const [likes, setLikes] = useState(0);
-  const [commentText, setCommentText] = useState("");
-  const [comments, setComments] = useState(0);
+  const [post, setPost] = useState();
+  const [isLiked, setIsLiked] = useState();
+  const [isBookmarked, setIsBookmarked] = useState();
+  const [likes, setLikes] = useState();
+  const [loading, setLoading] = useState(false);
+  const [commentText, setCommentText] = useState();
+  const [comments, setComments] = useState();
 
   useEffect(() => {
     const fetchPost = async () => {
-      try {
-        setLoading(true);
-        const response = await PostService.getPostById(postId);
-        console.log(response)
-        if (response instanceof ApiError) {
-            navigate(ROUTE_PATHS.pageNotFound);   
-        }
+      setLoading(true);
+      const response = await PostService.getPostById(postId);
+      const commentresponse = await CommentService.GetCommentService(postId);
+      if (response instanceof ApiError || commentresponse instanceof ApiError) {
+        navigate(ROUTE_PATHS.login);
+        console.log(response.errorMessage);
+      } else {
+        console.log("Post",response)
+        console.log("Comments",commentresponse)
         setPost(response);
         setIsLiked(response.isLiked);
         setIsBookmarked(response.isBookmarked);
         setLikes(response.likes);
-        setComments(response.comments);
-      } catch (error) {
-        console.error("Error fetching post data:", error);
-      } finally {
-        setLoading(false);
+        setComments(commentresponse.length);
       }
+      setLoading(false);
     };
-
     fetchPost();
   }, [postId]);
 
   const handleLike = async () => {
     setLoading(true);
-    const response = await LikeService.likePostService(post._id);
+    const response = await LikeService.likePostService(postId);
     if (response instanceof ApiError) {
       navigate(ROUTE_PATHS.login);
       console.log(response.errorMessage);
@@ -61,7 +59,7 @@ const PostPage = () => {
 
   const handleBookmark = async () => {
     setLoading(true);
-    const response = await BookmarkService.BookMarkPost(post._id);
+    const response = await BookmarkService.BookMarkPost(postId);
     if (response instanceof ApiError) {
       navigate(ROUTE_PATHS.login);
       console.log(response.errorMessage);
@@ -77,7 +75,7 @@ const PostPage = () => {
   const handleCommentSubmit = async () => {
     setComments(comments + 1);
     const response = await CommentService.addNewCommentService(
-      post._id,
+      postId,
       commentText
     );
     if (response instanceof ApiError) {
@@ -96,17 +94,8 @@ const PostPage = () => {
     adaptiveHeight: true,
   };
 
-  if (loading) {
-    return (
-      <div className="post max-w-lg w-full max-h-lvh bg-white p-6 rounded-lg shadow-md mb-6">
-        <div className="animate-pulse">
-          <div className="h-8 bg-gray-300 rounded w-3/4 mb-4"></div>
-          <div className="h-6 bg-gray-300 rounded w-1/2 mb-4"></div>
-          <div className="h-64 bg-gray-300 rounded mb-4"></div>
-          <div className="h-6 bg-gray-300 rounded w-1/4 mb-4"></div>
-        </div>
-      </div>
-    );
+  if (!post) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -133,7 +122,9 @@ const PostPage = () => {
           </p>
         </div>
       </div>
-      <div className="cursor-pointer" onClick={() => { navigate(`/post/${post._id}`); }}>
+      <div className="cursor-pointer" onClick={()=> {
+        navigate(`/post/${post._id}`);
+      }}>
         <div className="post-content mb-4">
           <p className="text-gray-700 mb-4">{post.content}</p>
           {post.images.length > 0 && (
@@ -159,6 +150,7 @@ const PostPage = () => {
               {tag}
             </span>
           ))}
+        </div>
         </div>
         <div className="post-footer flex items-center justify-between">
           <div className="actions flex items-center">
@@ -211,7 +203,7 @@ const PostPage = () => {
               >
                 <path d="M18 10c0 3.866-3.582 7-8 7H6.882L2 18.586V10C2 6.134 5.582 3 10 3s8 3.134 8 7zM5 10h10v1H5v-1z" />
               </svg>
-              {comments}
+              {comments ? comments.length : 0}
             </button>
             <button
               onClick={handleBookmark}
@@ -257,7 +249,7 @@ const PostPage = () => {
             {new Date(post.createdAt).toLocaleDateString()}
           </div>
         </div>
-      </div>
+      
       <div className="comment-section mt-4">
         <input
           type="text"
@@ -273,16 +265,8 @@ const PostPage = () => {
           Submit
         </button>
       </div>
-      {post.author.account._id === "CURRENT_USER_ID" && ( // Replace "CURRENT_USER_ID" with the ID of the current user
-        <button
-          onClick={() => navigate(`/edit-post/${post._id}`)}
-          className="edit-button bg-green-500 text-white px-4 py-2 rounded-lg mt-4"
-        >
-          Edit Post
-        </button>
-      )}
     </div>
-  );
-};
+  )
+}
 
-export default PostPage;
+export default PostPage

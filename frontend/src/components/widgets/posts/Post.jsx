@@ -121,6 +121,7 @@ const Post = ({ post }) => {
             </span>
           ))}
         </div>
+        </div>
         <div className="post-footer flex items-center justify-between">
           <div className="actions flex items-center">
             <button
@@ -218,7 +219,7 @@ const Post = ({ post }) => {
             {new Date(post.createdAt).toLocaleDateString()}
           </div>
         </div>
-      </div>
+      
       <div className="comment-section mt-4">
         <input
           type="text"
