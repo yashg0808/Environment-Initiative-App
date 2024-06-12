@@ -9,6 +9,8 @@ import  likeRoutes  from './routes/like.routes.js'
 import  followRoutes  from './routes/follow.routes.js'
 import  commentRoutes  from './routes/comment.routes.js'
 import  bookmarkRoutes from './routes/bookmark.routes.js'
+import  initiativeRoutes from './routes/initiative.routes.js'
+import  supportRoutes from './routes/support.routes.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
@@ -57,6 +59,8 @@ app.use("/api/v1/like", likeRoutes);
 app.use("/api/v1/follow", followRoutes);
 app.use("/api/v1/comment", commentRoutes);
 app.use("/api/v1/bookmark", bookmarkRoutes);
+app.use("/api/v1/initiative", initiativeRoutes);
+app.use("/api/v1/support", supportRoutes);
 // api/profile
 // api/initiatives
 // api/actions

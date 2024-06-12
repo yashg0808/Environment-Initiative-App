@@ -97,7 +97,6 @@ function MyAccountContainer() {
     useEffect(() => {
         const fetchData = async () => {
             const response = await AuthService.getAvatar();
-            console.log(response)
             setImage(response);
             const profileData = await ProfileService.getProfile();
             setCoverPic(profileData.coverImage);
