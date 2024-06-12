@@ -14,6 +14,7 @@ const ProfilePageContainer = () => {
   const dispatch = useDispatch();
   const params = new URLSearchParams(window.location.search);
   const username = params.get("profile");
+  const [errorMessage, setErrorMessage] = useState("");
   const [avatar, setAvatar] = useState("");
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);

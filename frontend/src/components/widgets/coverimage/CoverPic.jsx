@@ -11,11 +11,10 @@ const CoverPic = (props) => {
     };
   
     return (
-      <div className="container mt-5 flex flex-col items-center">
+      <div className="container mt-3 flex flex-col items-center">
         <img
           src={coverPic.url}
           alt="Cover Pic"
-          className="w-48 h-48 rounded-full object-cover mb-4 shadow-lg max-w-full"
         />
         <form onSubmit={handleCoverPicSubmit} className="w-full max-w-sm">
           <input

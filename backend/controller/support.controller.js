@@ -78,6 +78,7 @@ const getSupportersListByInitiativeId = asyncHandler(async (req, res) => {
               email: 1,
               avatar: 1,
               profile: 1,
+              amount: 1
             },
           },
         ],
@@ -92,11 +93,7 @@ const getSupportersListByInitiativeId = asyncHandler(async (req, res) => {
       $project: {
         _id: 0,
         supporter: 1,
-      },
-    },
-    {
-      $replaceRoot: {
-        newRoot: "$supporter",
+        amount: 1
       },
     },
   ]);
