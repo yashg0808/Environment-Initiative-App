@@ -122,6 +122,11 @@ const postCommonAggregation = (req) => {
         },
       },
     },
+    {
+      $sort: {
+        createdAt: -1,
+      },
+    }
   ];
 };
 
@@ -300,7 +305,6 @@ const removePostImage = asyncHandler(async (req, res) => {
 const getAllPosts = asyncHandler(async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
   const postAggregation = Post.aggregate([...postCommonAggregation(req)]);
-
   const posts = await Post.aggregatePaginate(
     postAggregation,
     getMongoosePaginationOptions({

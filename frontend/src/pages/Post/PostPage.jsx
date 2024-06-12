@@ -1,26 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import LikeService from "../../../services/like/LikeService";
-import BookmarkService from "../../../services/bookmark/BookmarkService";
-import CommentService from "../../../services/comment/CommentService";
-import ApiError from "../../../services/ApiError";
-import useCustomNavigate from "../../../hooks/useCustomNavigate";
-import { ROUTE_PATHS } from "../../../constants";
+import useCustomNavigate from '../../hooks/useCustomNavigate';
+import LikeService from '../../services/like/LikeService';
+import ApiError from '../../services/ApiError';
+import { ROUTE_PATHS } from '../../constants';
+import BookmarkService from '../../services/bookmark/BookmarkService';
+import CommentService from '../../services/comment/CommentService';
+import { useParams } from 'react-router-dom';
+import PostService from '../../services/post/PostService';
 
-const Post = ({ post }) => {
+function PostPage() {
+  const { postId } = useParams();
   const navigate = useCustomNavigate();
-  const [isLiked, setIsLiked] = useState(post.isLiked);
-  const [isBookmarked, setIsBookmarked] = useState(post.isBookmarked);
-  const [likes, setLikes] = useState(post.likes);
+  const [post, setPost] = useState();
+  const [isLiked, setIsLiked] = useState();
+  const [isBookmarked, setIsBookmarked] = useState();
+  const [likes, setLikes] = useState();
   const [loading, setLoading] = useState(false);
-  const [commentText, setCommentText] = useState("");
-  const [comments, setComments] = useState(post.comments);
+  const [commentText, setCommentText] = useState();
+  const [comments, setComments] = useState();
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      setLoading(true);
+      const response = await PostService.getPostById(postId);
+      const commentresponse = await CommentService.GetCommentService(postId);
+      if (response instanceof ApiError || commentresponse instanceof ApiError) {
+        navigate(ROUTE_PATHS.login);
+        console.log(response.errorMessage);
+      } else {
+        console.log("Post",response)
+        console.log("Comments",commentresponse)
+        setPost(response);
+        setIsLiked(response.isLiked);
+        setIsBookmarked(response.isBookmarked);
+        setLikes(response.likes);
+        setComments(commentresponse.length);
+      }
+      setLoading(false);
+    };
+    fetchPost();
+  }, [postId]);
 
   const handleLike = async () => {
     setLoading(true);
-    const response = await LikeService.likePostService(post._id);
+    const response = await LikeService.likePostService(postId);
     if (response instanceof ApiError) {
       navigate(ROUTE_PATHS.login);
       console.log(response.errorMessage);
@@ -33,7 +59,7 @@ const Post = ({ post }) => {
 
   const handleBookmark = async () => {
     setLoading(true);
-    const response = await BookmarkService.BookMarkPost(post._id);
+    const response = await BookmarkService.BookMarkPost(postId);
     if (response instanceof ApiError) {
       navigate(ROUTE_PATHS.login);
       console.log(response.errorMessage);
@@ -49,7 +75,7 @@ const Post = ({ post }) => {
   const handleCommentSubmit = async () => {
     setComments(comments + 1);
     const response = await CommentService.addNewCommentService(
-      post._id,
+      postId,
       commentText
     );
     if (response instanceof ApiError) {
@@ -67,6 +93,10 @@ const Post = ({ post }) => {
     slidesToScroll: 1,
     adaptiveHeight: true,
   };
+
+  if (!post) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="post max-w-lg w-full max-h-lvh bg-white p-6 rounded-lg shadow-md mb-6">
@@ -173,7 +203,7 @@ const Post = ({ post }) => {
               >
                 <path d="M18 10c0 3.866-3.582 7-8 7H6.882L2 18.586V10C2 6.134 5.582 3 10 3s8 3.134 8 7zM5 10h10v1H5v-1z" />
               </svg>
-              {comments}
+              {comments ? comments.length : 0}
             </button>
             <button
               onClick={handleBookmark}
@@ -236,7 +266,7 @@ const Post = ({ post }) => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Post;
+export default PostPage

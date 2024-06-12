@@ -108,10 +108,10 @@ const Signup = (props) => {
         errorMessage={errors.username?.message || ""}
         {...register("username", {
           required: t("usernameIsRequired"),
-          validate: (value) => {
-            if (value.length < MIN_USERNAME_LENGTH) {
-              return t("usernameMustBeThreeCharactersLong");
-            }
+          validate: {
+            matchPattern: (value) =>
+              REGEX_PATTERNS.usernamePattern.test(value) ||
+              "Username must be at least 3 characters long, all lowercase, and can contain numbers and underscores only",
           },
         })}
       />
