@@ -38,7 +38,9 @@ router
     createInitiative
   );
 
-router.route("/get/my").get(verifyJWT, getMyInitiatives);
+router
+  .route("/get/my")
+  .get(verifyJWT, getMyInitiatives);
 
 router
   .route("/get/t/:tag")
