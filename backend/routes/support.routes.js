@@ -2,19 +2,19 @@ import { Router } from "express";
 import {
   supportInitiative,
   getSupportersListByInitiativeId,
-} from "../controller/supporterController.js";
+} from "../controller/support.controller.js";
 import {
   verifyJWT,
   getLoggedInUserOrIgnore,
 } from "../middlewares/auth.middleware.js";
 import { validate } from "../validators/validate.js";
 import { mongoIdPathVariableValidator } from "../validators/common/mongodb.validators.js";
-import { supportValidator } from "../validators/support.validators.js";
+import { supportValidator } from "../validators/support.validator.js";
 
 const router = Router();
 
 router
-  .route("/:initiativeId/support")
+  .route("/:initiativeId")
   .post(
     verifyJWT,
     mongoIdPathVariableValidator("initiativeId"),
