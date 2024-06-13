@@ -17,7 +17,12 @@ const Initiative = ({ initiative }) => {
   return (
     <div className="post max-w-lg w-full max-h-lvh bg-white p-6 rounded-lg shadow-md mb-3 mt-3">
       <div className="post-header flex items-center">
-        <h1 className="text-lg font-semibold cursor-pointer">
+        <h1
+          className="text-lg font-semibold cursor-pointer"
+          onClick={() => {
+            navigate(`/initiative/${initiative._id}`);
+          }}
+        >
           {initiative.title}
         </h1>
         <div className="flex items-center text-gray-600 mt-2">

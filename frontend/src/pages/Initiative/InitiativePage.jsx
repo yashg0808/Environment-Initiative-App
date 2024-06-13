@@ -150,7 +150,7 @@ function InitiativePage() {
               src={supporter.supporter.avatar.url}
               className="w-10 h-10 rounded-full mr-3"
             />
-            @{supporter.supporter.username} {supporter.amount}
+            @{supporter.supporter.username}: {supporter.amount}
           </div>
         ))}
       </div>
