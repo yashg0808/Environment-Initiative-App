@@ -32,8 +32,6 @@ function PostPage() {
         navigate(ROUTE_PATHS.login);
         console.log(response.errorMessage);
       } else {
-        console.log("Post",response)
-        console.log("Comments",commentresponse)
         setPost(response);
         setIsLiked(response.isLiked);
         setIsBookmarked(response.isBookmarked);
@@ -101,7 +99,7 @@ function PostPage() {
   }
 
   return (
-    <div className='flex'>
+    <div className='flex ml-4'>
     <div className="post max-w-lg w-full max-h-lvh bg-white p-6 rounded-lg shadow-md mb-6">
       <div
         className="post-header flex items-center mb-4"
@@ -281,9 +279,9 @@ function PostPage() {
         >
           <img
             src={comment.author.account.avatar.url}
-            className="w-10 h-10 rounded-full mr-3"
+            className="w-7 h-7 rounded-full mr-3"
           />
-          @{comment.author.account.username}: {comment.content}
+          <span className='text-green-600'>@{comment.author.account.username}</span>: {comment.content}
         </div>
       ))}
     </div>

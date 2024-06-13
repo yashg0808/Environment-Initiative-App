@@ -36,7 +36,7 @@ const ProfilePageContainer = () => {
       dispatch(logOut());
       setIsCurrentUser(false);
       console.log("Logged Out Successfully");
-      navigate(ROUTE_PATHS.home);
+      navigate("/");
     }
     setLoading(false);
   };

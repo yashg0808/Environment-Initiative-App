@@ -70,7 +70,7 @@ function InitiativePage() {
   }
 
   return (
-    <div className="flex items-centre">
+    <div className="flex items-centre ml-4">
       <div className="post max-w-lg w-full max-h-lvh bg-white p-6 rounded-lg shadow-md mb-3 mt-3">
         <div className="post-header flex items-center">
           <h1 className="text-lg font-semibold cursor-pointer">
@@ -136,7 +136,7 @@ function InitiativePage() {
           </button>
         </div>
       </div>
-      <div className="ml-3">
+      <div className="ml-4 mt-3">
         <h1 className="text-lg font-semibold">Supporters</h1>
         {supporters.map((supporter) => (
           <div
