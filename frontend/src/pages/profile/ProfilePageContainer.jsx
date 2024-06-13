@@ -50,14 +50,14 @@ const ProfilePageContainer = () => {
         const profileData = await ProfileService.getProfileByUsername(username);
         const image = await AuthService.getAavatarById(profileData.owner);
         const postsData = await PostService.getPostsByUser(username);
-        const followerListData = await ProfileService.getFollowersByUsername(
-          username
-        );
-        const followingListData = await ProfileService.getFollowingByUsername(
-          username
-        );
-        setFollowerList(followerListData.followers);
-        setFollowingList(followingListData.following);
+        // const followerListData = await ProfileService.getFollowersByUsername(
+        //   username
+        // );
+        // const followingListData = await ProfileService.getFollowingByUsername(
+        //   username
+        // );
+        // setFollowerList(followerListData.followers);
+        // setFollowingList(followingListData.following);
         setPosts(postsData.posts);
         setAvatar(image);
         setProfile(profileData);
@@ -96,6 +96,20 @@ const ProfilePageContainer = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchFollowers = async () => {
+    const followerListData = await ProfileService.getFollowersByUsername(
+      username
+    );
+    setFollowerList(followerListData.followers);
+  };
+
+  const fetchFollowing = async () => {
+    const followingListData = await ProfileService.getFollowingByUsername(
+      username
+    );
+    setFollowingList(followingListData.following);
   };
 
   const toggleModal = (type) => {
@@ -188,13 +202,18 @@ const ProfilePageContainer = () => {
           <div className="flex space-x-2 mt-2 text-gray-600">
             <div
               className="flex items-center cursor-pointer"
-              onClick={() => toggleModal("followers")}
+              onClick={() => {
+                fetchFollowers();
+                toggleModal("followers");
+              }}
             >
               {profile.followersCount} Followers
             </div>
             <div
               className="flex items-center cursor-pointer"
-              onClick={() => toggleModal("following")}
+              onClick={() => {
+                fetchFollowing();
+                toggleModal("following")}}
             >
               {profile.followingCount} Following
             </div>
