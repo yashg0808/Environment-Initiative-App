@@ -53,31 +53,38 @@ const Initiative = ({ initiative }) => {
           {initiative.creatorName.name})
         </p>
       </div>
-      <p>{initiative.description}</p>
-      <div className="post-content mb-4">
-        {initiative.images.length > 0 && (
-          <Slider {...settings} className="post-images">
-            {initiative.images.map((image) => (
-              <div key={image._id}>
-                <img
-                  src={image.url}
-                  alt="Initiative visual content"
-                  className="w-full h-80 rounded-lg"
-                />
-              </div>
-            ))}
-          </Slider>
-        )}
-      </div>
-      <div className="post-footer">
-        <p>Amount Received: {initiative.amountReceived}</p>
-        <p>Supporters: {initiative.supporterCount}</p>
-        <button
-          type="button"
-          className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-        >
-          $ Support
-        </button>
+      <div
+        className="cursor-pointer"
+        onClick={() => {
+          navigate(`/initiative/${initiative._id}`);
+        }}
+      >
+        <p>{initiative.description}</p>
+        <div className="post-content mb-4">
+          {initiative.images.length > 0 && (
+            <Slider {...settings} className="post-images">
+              {initiative.images.map((image) => (
+                <div key={image._id}>
+                  <img
+                    src={image.url}
+                    alt="Initiative visual content"
+                    className="w-full h-80 rounded-lg"
+                  />
+                </div>
+              ))}
+            </Slider>
+          )}
+        </div>
+        <div className="post-footer">
+          <p>Amount Received: {initiative.amountReceived}</p>
+          <p>Supporters: {initiative.supporterCount}</p>
+          <button
+            type="button"
+            className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+          >
+            $ Support
+          </button>
+        </div>
       </div>
     </div>
   );
