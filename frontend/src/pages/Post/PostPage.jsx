@@ -21,6 +21,7 @@ function PostPage() {
   const [loading, setLoading] = useState(false);
   const [commentText, setCommentText] = useState();
   const [comments, setComments] = useState();
+  const [commentsData, setCommentsData] = useState([]);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -31,13 +32,12 @@ function PostPage() {
         navigate(ROUTE_PATHS.login);
         console.log(response.errorMessage);
       } else {
-        console.log("Post",response)
-        console.log("Comments",commentresponse)
         setPost(response);
         setIsLiked(response.isLiked);
         setIsBookmarked(response.isBookmarked);
         setLikes(response.likes);
-        setComments(commentresponse.length);
+        setCommentsData(commentresponse.comments);
+        setComments(commentresponse.comments.length);
       }
       setLoading(false);
     };
@@ -99,6 +99,7 @@ function PostPage() {
   }
 
   return (
+    <div className='flex ml-4'>
     <div className="post max-w-lg w-full max-h-lvh bg-white p-6 rounded-lg shadow-md mb-6">
       <div
         className="post-header flex items-center mb-4"
@@ -203,7 +204,7 @@ function PostPage() {
               >
                 <path d="M18 10c0 3.866-3.582 7-8 7H6.882L2 18.586V10C2 6.134 5.582 3 10 3s8 3.134 8 7zM5 10h10v1H5v-1z" />
               </svg>
-              {comments ? comments.length : 0}
+              {comments ? comments : 0}
             </button>
             <button
               onClick={handleBookmark}
@@ -265,6 +266,25 @@ function PostPage() {
           Submit
         </button>
       </div>
+    </div>
+    <div className='ml-6'>
+      <h1 className="text-lg font-semibold">Comments</h1>
+      {commentsData.map((comment) => (
+        <div
+          key={comment.author.account._id}
+          className="flex items-center mt-3 mb-3  cursor-pointer"
+          onClick={() => {
+            navigate(`/u?profile=${comment.author.account.username}`);
+          }}
+        >
+          <img
+            src={comment.author.account.avatar.url}
+            className="w-7 h-7 rounded-full mr-3"
+          />
+          <span className='text-green-600'>@{comment.author.account.username}</span>: {comment.content}
+        </div>
+      ))}
+    </div>
     </div>
   )
 }

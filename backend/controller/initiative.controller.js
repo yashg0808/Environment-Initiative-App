@@ -2,8 +2,6 @@ import mongoose from "mongoose";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { Initiative } from "../models/initiative.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { User } from "../models/user.model.js";
-import { Supporter } from "../models/supporter.model.js";
 import { getLocalPath, getMongoosePaginationOptions, getStaticFilePath, removeLocalFile } from "../utils/helper.js";
 import { MAXIMUM_INITIATIVE_IMAGE_COUNT } from "../constants.js";
 import { ApiError } from "../utils/ApiError.js";
@@ -46,6 +44,28 @@ const initiativeCommonAggregation = (req) => {
         creator: { $first: "$creator" },
       },
     },
+    {
+      $lookup: {
+        from: "profiles",
+        localField: "createdBy",
+        foreignField: "owner",
+        as: "creatorName",
+        pipeline: [
+            {
+              $project: {
+                name: 1
+              },
+            },
+          ]
+      },
+    },
+    {
+      $addFields: {
+        creatorName: {
+          $first: "$creatorName"
+        }
+      }
+    },
   ];
 };
 
@@ -53,7 +73,7 @@ const createInitiative = asyncHandler(async (req, res) => {
   const { title, description, location, goals, tags, status } = req.body;
 
   const images =
-    req.files?.images && req.files.images.length
+    req.files?.images && req.files.images?.length
       ? await Promise.all(req.files.images.map(async (image) => {
           const imageUrl = getStaticFilePath(req, image.filename);
           const imageLocalPath = getLocalPath(image.filename);

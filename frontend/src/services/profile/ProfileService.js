@@ -45,6 +45,28 @@ class ProfileService {
             return response;
         }
     }
+    async getFollowersByUsername(username) {
+        const apiRequest = new ApiRequest(`${this.FOLLOW_UNFOLLOW_USER_URL}/list/followers/${username}`);
+        const response = await apiRequest.getRequest();
+        if (response instanceof ApiResponse && response.success) {
+            return response.data;
+        } else if (response instanceof ApiResponse) {
+            return new ApiError(response.message);
+        } else {
+            return response;
+        }
+    }
+    async getFollowingByUsername(username) {
+        const apiRequest = new ApiRequest(`${this.FOLLOW_UNFOLLOW_USER_URL}/list/following/${username}`);
+        const response = await apiRequest.getRequest();
+        if (response instanceof ApiResponse && response.success) {
+            return response.data;
+        } else if (response instanceof ApiResponse) {
+            return new ApiError(response.message);
+        } else {
+            return response;
+        }
+    }
     async followUnFollowUser(userId) {
         const apiRequest = new ApiRequest(`${this.FOLLOW_UNFOLLOW_USER_URL}/${userId}`);
 

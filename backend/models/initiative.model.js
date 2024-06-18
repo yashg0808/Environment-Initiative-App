@@ -42,10 +42,15 @@
         enum: ['planned', 'in-progress', 'completed'],
         default: 'planned',
       },
-      images: [{
-        url: String,
-        description: String,
-      }],
+      images: {
+        type: [
+          {
+            url: String,
+            localPath: String,
+          },
+        ],
+        default: [],
+      },
       videos: [{
         url: String,
         description: String,

@@ -7,7 +7,9 @@ export const ROUTE_PATHS = {
     profile: "/u",
     myAccount:"/my-account",
     notemailverified: "/notemailverified",
-    post: "/post/:postId"
+    post: "/post/:postId",
+    initiatives: "/initiatives",
+    initiative: "/initiative/:initiativeId",
 }
 
 export const REGEX_PATTERNS = {

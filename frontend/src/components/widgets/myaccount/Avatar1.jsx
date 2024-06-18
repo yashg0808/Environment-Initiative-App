@@ -11,11 +11,10 @@ const Avatar = (props) => {
   };
 
   return (
-    <div className="container mt-5 flex flex-col items-center">
+    <div className="container mt-3 flex flex-col items-center">
       <img
         src={image.url}
         alt="Profile Avatar"
-        className="w-48 h-48 rounded-full object-cover mb-4 shadow-lg max-w-full "
       />
       <form onSubmit={handleAvatarSubmit} className="w-full max-w-sm">
         <input

@@ -117,7 +117,9 @@ function MyAccountContainer() {
                 />
             )}
             <div className='block relative mx-auto'>
+                <h1 className="text-2xl font-bold text-gray-800 mt-6 text-center">Cover Picture</h1>
                 <CoverPic className="block relative h-[437px] overflow-hidden"  coverPic={coverPic} handleCoverPicSubmit={handleCoverPicSubmit} isLoading={isLoading} selectedCoverPic={selectedCoverPic} setSelectedCoverPic={setSelectedCoverPic} />
+                <h1 className="text-2xl font-bold text-gray-800 mt-6 text-center">Avatar</h1>
                 <Avatar className="block relative border-[3px] border-[#d0efff] rounded-[5px] w-[200px] h-[200px] mt-[-100px] mb-[10px] ml-[20px]" image={image} handleAvatarSubmit={handleAvatarSubmit} isLoading={isLoading} selectedFile={selectedFile} setSelectedFile={setSelectedFile} />
             </div>
             <MyAccount
