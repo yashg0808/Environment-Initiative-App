@@ -22,6 +22,11 @@ export const getNavigationItemList = (isLoggedIn,username) => {
       tempDrawerItems.pop();
       tempDrawerItems.pop();
       tempDrawerItems.push({
+        id: 3,
+        textKey: "Initiatives",
+        navigateTo: "/initiatives",
+      });
+      tempDrawerItems.push({
         id: 4,
         textKey: "My Account",
         navigateTo: `/u?profile=${username}`,
