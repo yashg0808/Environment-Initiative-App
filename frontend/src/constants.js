@@ -10,6 +10,7 @@ export const ROUTE_PATHS = {
     post: "/post/:postId",
     initiatives: "/initiatives",
     initiative: "/initiative/:initiativeId",
+    support: "/support/:initiativeId"
 }
 
 export const REGEX_PATTERNS = {

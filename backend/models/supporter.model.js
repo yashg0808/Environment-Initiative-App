@@ -8,6 +8,12 @@ const supporterSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    supporterName: {
+      type: String
+    },
+    supporterEmail: {
+      type: String
+    },
     // Initiative that is being supported
     supportedInitiative: {
       type: Schema.Types.ObjectId,
