@@ -22,9 +22,9 @@ export const getNavigationItemList = (isLoggedIn,username) => {
       tempDrawerItems.pop();
       tempDrawerItems.pop();
       tempDrawerItems.push({
-        id: 3,
+        id: 5,
         textKey: "Initiatives",
-        navigateTo: "/initiatives",
+        navigateTo: `/initiatives/`,
       });
       tempDrawerItems.push({
         id: 4,

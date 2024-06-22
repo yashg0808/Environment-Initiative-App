@@ -8,7 +8,7 @@ import { getMongoosePaginationOptions } from "../utils/helper.js";
 
 const supportInitiative = asyncHandler(async (req, res) => {
   const { initiativeId } = req.params;
-  const { amount } = req.body;
+  const { supporterName, supporterEmail, amount } = req.body;
 
   // Check if the initiative exists
   const initiative = await Initiative.findById(initiativeId);
@@ -20,6 +20,8 @@ const supportInitiative = asyncHandler(async (req, res) => {
   // Add support to the initiative
   const supporter = await Supporter.create({
     supporterId: req.user._id,
+    supporterName,
+    supporterEmail,
     supportedInitiative: initiativeId,
     amount,
   });
