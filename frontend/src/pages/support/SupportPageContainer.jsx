@@ -9,107 +9,130 @@ const SupportPageContainer = () => {
   const [donationAmount, setDonationAmount] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
 
-  const contractAddress = "0x4528FCe34FE1ef69D994B3098FabbB9f4f7c2004"; // Replace with your actual contract address
+  const contractAddress = "0x9e57910ceFd664a412342749e54965345b712A78"; // Replace with your actual contract address
 
   // Contract ABI generated from Solidity compiler or Remix
   const contractABI = [
     {
-      inputs: [],
-      stateMutability: "nonpayable",
-      type: "constructor",
-    },
-    {
-      anonymous: false,
-      inputs: [
+      "inputs": [
         {
-          indexed: true,
-          internalType: "address",
-          name: "from",
-          type: "address",
+          "internalType": "string",
+          "name": "initiativeId",
+          "type": "string"
         },
         {
-          indexed: false,
-          internalType: "uint256",
-          name: "amount",
-          type: "uint256",
-        },
+          "internalType": "string",
+          "name": "userId",
+          "type": "string"
+        }
       ],
-      name: "FundsReceived",
-      type: "event",
+      "name": "donate",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
     },
     {
-      anonymous: false,
-      inputs: [
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
         {
-          indexed: true,
-          internalType: "address",
-          name: "to",
-          type: "address",
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
         },
         {
-          indexed: false,
-          internalType: "uint256",
-          name: "amount",
-          type: "uint256",
+          "indexed": false,
+          "internalType": "string",
+          "name": "initiativeId",
+          "type": "string"
         },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "userId",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
       ],
-      name: "FundsWithdrawn",
-      type: "event",
+      "name": "FundsReceived",
+      "type": "event"
     },
     {
-      stateMutability: "payable",
-      type: "fallback",
-    },
-    {
-      inputs: [
+      "anonymous": false,
+      "inputs": [
         {
-          internalType: "address payable",
-          name: "receiver",
-          type: "address",
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
         },
-      ],
-      name: "withdrawFunds",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      stateMutability: "payable",
-      type: "receive",
-    },
-    {
-      inputs: [],
-      name: "getBalance",
-      outputs: [
         {
-          internalType: "uint256",
-          name: "",
-          type: "uint256",
-        },
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
       ],
-      stateMutability: "view",
-      type: "function",
+      "name": "FundsWithdrawn",
+      "type": "event"
     },
     {
-      inputs: [],
-      name: "owner",
-      outputs: [
+      "stateMutability": "payable",
+      "type": "fallback"
+    },
+    {
+      "inputs": [
         {
-          internalType: "address",
-          name: "",
-          type: "address",
-        },
+          "internalType": "address payable",
+          "name": "receiver",
+          "type": "address"
+        }
       ],
-      stateMutability: "view",
-      type: "function",
+      "name": "withdrawFunds",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      inputs: [],
-      name: "donate",
-      outputs: [],
-      stateMutability: "payable",
-      type: "function",
+      "stateMutability": "payable",
+      "type": "receive"
     },
+    {
+      "inputs": [],
+      "name": "getBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
   ];
 
   // Load Web3 and connect to the user's wallet
