@@ -10,6 +10,8 @@ import Skeleton from "../../components/basic/Skeleton";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
 import Web3 from "web3";
 import { abi, providerUrl, contractAddress } from "../../constants";
+import ProfileService from "../../services/profile/ProfileService";
+import AuthService from "../../services/auth/AuthService";
 
 function InitiativePage() {
   const { initiativeId } = useParams();
@@ -40,10 +42,13 @@ function InitiativePage() {
         .FundsReceived({
           fromBlock: 0,
         })
-        .on("data", function (event) {
+        .on("data", async function (event) {
           if (event.returnValues.initiativeId === initiativeId) {
             const amountInEth = web3.utils.fromWei(event.returnValues.amount, "ether");
+            const profileData = await ProfileService.getProfileByUsername(event.returnValues.userId);
+            const image = await AuthService.getAavatarById(profileData.owner);
             newSupporters.push({
+              avatar: image,
               supporter: event.returnValues.userId,
               amount: amountInEth,
             });
@@ -162,7 +167,12 @@ function InitiativePage() {
               navigate(`/u?profile=${supporter.supporter}`);
             }}
           >
-            @{supporter.supporter}: {supporter.amount} eth
+            <img
+              src={supporter.avatar}
+              alt="Supporter avatar"
+              className="w-8 h-8 rounded-full mr-2 border-1 border-black"
+            />
+             @{supporter.supporter}: {supporter.amount} eth
           </div>
         ))}
       </div>
