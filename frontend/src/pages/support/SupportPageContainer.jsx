@@ -141,10 +141,11 @@ const SupportPageContainer = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const response=await AuthService.getCurrentUser();
+      console.log(response)
       if(response instanceof ApiError){
         console.log(response.errorMessage);
       }else{
-        setUserId(response._id);
+        setUserId(response.username);
       }
     }
     fetchUser();

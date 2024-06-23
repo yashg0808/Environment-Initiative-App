@@ -8,6 +8,8 @@ import InitiativeService from "../../services/initiative/InitiativeService";
 import { ROUTE_PATHS } from "../../constants";
 import Skeleton from "../../components/basic/Skeleton";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
+import Web3 from "web3";
+import { abi, providerUrl, contractAddress } from "../../constants";
 
 function InitiativePage() {
   const { initiativeId } = useParams();
@@ -28,19 +30,30 @@ function InitiativePage() {
       }
       setLoading(false);
     };
-    const fetchSuoporters = async () => {
-      setLoading(true);
-      const response = await InitiativeService.getSupporters(initiativeId);
-      if (response instanceof ApiError) {
-        navigate(ROUTE_PATHS.login);
-        console.log(response.errorMessage);
-      } else {
-        setSupporters(response.supporters);
-      }
-      setLoading(false);
+
+    const fetchSupporters = async () => {
+      const web3 = new Web3(new Web3.providers.WebsocketProvider(providerUrl));
+      const contract = new web3.eth.Contract(abi, contractAddress);
+      const newSupporters = [];
+
+      contract.events
+        .FundsReceived({
+          fromBlock: 0,
+        })
+        .on("data", function (event) {
+          if (event.returnValues.initiativeId === initiativeId) {
+            const amountInEth = web3.utils.fromWei(event.returnValues.amount, "ether");
+            newSupporters.push({
+              supporter: event.returnValues.userId,
+              amount: amountInEth,
+            });
+            setSupporters([...newSupporters]);
+          }
+        })
     };
+
     fetchInitiative();
-    fetchSuoporters();
+    fetchSupporters();
   }, [initiativeId]);
 
   const settings = {
@@ -141,19 +154,15 @@ function InitiativePage() {
       </div>
       <div className="ml-4 mt-3">
         <h1 className="text-lg font-semibold">Supporters</h1>
-        {supporters.map((supporter) => (
+        {supporters.map((supporter, index) => (
           <div
-            key={supporter._id}
-            className="flex items-center mt-3 mb-3  cursor-pointer"
+            key={index}
+            className="flex items-center mt-3 mb-3 cursor-pointer"
             onClick={() => {
-              navigate(`/u?profile=${supporter.supporter.username}`);
+              navigate(`/u?profile=${supporter.supporter}`);
             }}
           >
-            <img
-              src={supporter.supporter.avatar.url}
-              className="w-10 h-10 rounded-full mr-3"
-            />
-            @{supporter.supporter.username}: {supporter.amount}
+            @{supporter.supporter}: {supporter.amount} eth
           </div>
         ))}
       </div>
