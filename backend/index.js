@@ -4,7 +4,7 @@ import { httpServer } from './app.js';
 import Web3 from 'web3';
 
 const providerUrl = "wss://eth-sepolia.g.alchemy.com/v2/jmBFJ1eJ4ndLMh_6FOm9d9p_1j2zlh9t";
-const contractAddress = "0x9e57910ceFd664a412342749e54965345b712A78";
+const contractAddress = "0x4Abc6CFe0EA35AaA8576E67e301fBc76006387b2";
 const webhookUrl = "https://your-dummy-fetch-url";
 
 const abi = [
