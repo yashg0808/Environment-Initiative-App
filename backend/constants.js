@@ -6,7 +6,7 @@ export const MAXIMUM_POST_IMAGE_COUNT = 6;
 
 export const MAXIMUM_INITIATIVE_IMAGE_COUNT = 6;
 
-export const contractAddress = "0x4Abc6CFe0EA35AaA8576E67e301fBc76006387b2"
+export const contractAddress = "0x9B4592CBec01E6b2C99265A68E67eD4e3dcc4E38"
 
 export const providerUrl = "wss://eth-sepolia.g.alchemy.com/v2/jmBFJ1eJ4ndLMh_6FOm9d9p_1j2zlh9t";
 
