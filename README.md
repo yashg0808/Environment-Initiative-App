@@ -1,4 +1,5 @@
 # Environment Initiative App
+-If you visit the deployed app on render.com, it will take around 2 mins to load, because its on shared resource, cooperation is much appreciated.
 
 ## Overview
 
