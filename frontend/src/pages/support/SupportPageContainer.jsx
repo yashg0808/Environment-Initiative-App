@@ -1,141 +1,30 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Web3 from "web3";
+import AuthService from "../../services/auth/AuthService";
+import ApiError from "../../services/ApiError";
+import { contractAddress, abi } from "../../constants";
 
 const SupportPageContainer = () => {
+  const { initiativeId } = useParams();
   const [account, setAccount] = useState("");
   const [web3, setWeb3] = useState(null);
   const [contract, setContract] = useState(null);
   const [donationAmount, setDonationAmount] = useState("");
-  const [initiativeId, setInitiativeId] = useState("");
   const [userId, setUserId] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
 
-  const contractAddress = "0x9e57910ceFd664a412342749e54965345b712A78"; // Replace with your actual contract address
-
-  const contractABI = [
-    {
-      "inputs": [
-        {
-          "internalType": "string",
-          "name": "initiativeId",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "userId",
-          "type": "string"
-        }
-      ],
-      "name": "donate",
-      "outputs": [],
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "from",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "string",
-          "name": "initiativeId",
-          "type": "string"
-        },
-        {
-          "indexed": false,
-          "internalType": "string",
-          "name": "userId",
-          "type": "string"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "FundsReceived",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "to",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "FundsWithdrawn",
-      "type": "event"
-    },
-    {
-      "stateMutability": "payable",
-      "type": "fallback"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address payable",
-          "name": "receiver",
-          "type": "address"
-        }
-      ],
-      "name": "withdrawFunds",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "stateMutability": "payable",
-      "type": "receive"
-    },
-    {
-      "inputs": [],
-      "name": "getBalance",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "owner",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    }
-  ];
-
   useEffect(() => {
+    const fetchUser = async () => {
+      const response=await AuthService.getCurrentUser();
+      console.log(response)
+      if(response instanceof ApiError){
+        console.log(response.errorMessage);
+      }else{
+        setUserId(response.username);
+      }
+    }
+    fetchUser();
     const loadWeb3 = async () => {
       if (window.ethereum) {
         const web3Instance = new Web3(window.ethereum);
@@ -145,7 +34,7 @@ const SupportPageContainer = () => {
           setAccount(accounts[0]);
           setWeb3(web3Instance);
           const contractInstance = new web3Instance.eth.Contract(
-            contractABI,
+            abi,
             contractAddress
           );
           setContract(contractInstance);
@@ -158,7 +47,7 @@ const SupportPageContainer = () => {
         const accounts = await web3Instance.eth.getAccounts();
         setAccount(accounts[0]);
         const contractInstance = new web3Instance.eth.Contract(
-          contractABI,
+          abi,
           contractAddress
         );
         setContract(contractInstance);
@@ -204,36 +93,6 @@ const SupportPageContainer = () => {
       <h2 className="text-2xl font-bold mb-6 text-center">
         Donate to Support
       </h2>
-      <div className="mb-4">
-        <label
-          htmlFor="initiativeId"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Initiative ID:
-        </label>
-        <input
-          type="text"
-          id="initiativeId"
-          value={initiativeId}
-          onChange={(e) => setInitiativeId(e.target.value)}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-        />
-      </div>
-      <div className="mb-4">
-        <label
-          htmlFor="userId"
-          className="block text-sm font-medium text-gray-700"
-        >
-          User ID:
-        </label>
-        <input
-          type="text"
-          id="userId"
-          value={userId}
-          onChange={(e) => setUserId(e.target.value)}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-        />
-      </div>
       <div className="mb-4">
         <label
           htmlFor="amount"
