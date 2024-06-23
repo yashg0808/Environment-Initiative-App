@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Web3 from "web3";
+import AuthService from "../../services/auth/AuthService";
+import ApiError from "../../services/ApiError";
 
 const SupportPageContainer = () => {
+  const { initiativeId } = useParams();
   const [account, setAccount] = useState("");
   const [web3, setWeb3] = useState(null);
   const [contract, setContract] = useState(null);
   const [donationAmount, setDonationAmount] = useState("");
-  const [initiativeId, setInitiativeId] = useState("");
   const [userId, setUserId] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
 
@@ -136,6 +139,15 @@ const SupportPageContainer = () => {
   ];
 
   useEffect(() => {
+    const fetchUser = async () => {
+      const response=await AuthService.getCurrentUser();
+      if(response instanceof ApiError){
+        console.log(response.errorMessage);
+      }else{
+        setUserId(response._id);
+      }
+    }
+    fetchUser();
     const loadWeb3 = async () => {
       if (window.ethereum) {
         const web3Instance = new Web3(window.ethereum);
@@ -204,36 +216,6 @@ const SupportPageContainer = () => {
       <h2 className="text-2xl font-bold mb-6 text-center">
         Donate to Support
       </h2>
-      <div className="mb-4">
-        <label
-          htmlFor="initiativeId"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Initiative ID:
-        </label>
-        <input
-          type="text"
-          id="initiativeId"
-          value={initiativeId}
-          onChange={(e) => setInitiativeId(e.target.value)}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-        />
-      </div>
-      <div className="mb-4">
-        <label
-          htmlFor="userId"
-          className="block text-sm font-medium text-gray-700"
-        >
-          User ID:
-        </label>
-        <input
-          type="text"
-          id="userId"
-          value={userId}
-          onChange={(e) => setUserId(e.target.value)}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-        />
-      </div>
       <div className="mb-4">
         <label
           htmlFor="amount"
