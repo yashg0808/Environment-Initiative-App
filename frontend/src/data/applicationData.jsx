@@ -10,6 +10,11 @@ export const DRAWER_ITEMS = [
       navigateTo: "/about",
     },
     {
+      id: 5,
+      textKey: "Initiatives",
+      navigateTo: `/initiatives/`,
+    },
+    {
       id: 3,
       textKey: "login",
       navigateTo: "/login",
@@ -20,12 +25,6 @@ export const getNavigationItemList = (isLoggedIn,username) => {
     const tempDrawerItems = [...DRAWER_ITEMS];
     if (isLoggedIn) {
       tempDrawerItems.pop();
-      tempDrawerItems.pop();
-      tempDrawerItems.push({
-        id: 5,
-        textKey: "Initiatives",
-        navigateTo: `/initiatives/`,
-      });
       tempDrawerItems.push({
         id: 4,
         textKey: "My Account",
