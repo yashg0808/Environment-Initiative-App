@@ -8,7 +8,6 @@ The Environment Initiative App is a web application dedicated to supporting and 
 ## Features
 
 - **View Initiatives:**
-  - Currently you can only view initiative by signing up in the app. (1 min process)
   - Detailed information about different environmental initiatives.
   - Information includes the supporters, creator, description, location, and images.
 
