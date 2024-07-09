@@ -31,6 +31,10 @@ The Environment Initiative App is a web application dedicated to supporting and 
 - **Backend:**
   - Node.js and Express.js for server-side development.
   - MongoDB for database management.
+    
+- **Authentication:**
+  - Used JWT (JSON Web Tokens) for authentication.
+  - Secured password storage with bcrypt.
 
 - **Blockchain:**
   - Web3.js for interacting with the Ethereum blockchain.
