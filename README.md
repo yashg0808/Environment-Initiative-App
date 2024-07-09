@@ -11,7 +11,7 @@ The Environment Initiative App is a web application dedicated to supporting and 
   - Information includes the supporters, creator, description, location, and images.
 
 - **Support Initiatives:**
-  - Users can donate to initiatives using Ethereum.
+  - Users can donate to initiatives using Ethereum when they are logged in.
   - Transactions are recorded on the Ethereum blockchain.
 
 - **Supporters List:**
